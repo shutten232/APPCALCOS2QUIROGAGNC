@@ -1,0 +1,2486 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>CRPC CALCOS – Calcomanías cilindros</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <style>
+    :root{
+      --rojo:#d50000;
+      --rojo-osc:#a80000;
+      --amarillo:#ffd600;
+      --fondo:#f4f4f4;
+      --card:#ffffff;
+      --borde:#dddddd;
+      --texto:#111111;
+      --texto-suave:#555555;
+    }
+
+    *{
+      box-sizing:border-box;
+      font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    }
+
+    body{
+      margin:0;
+      padding:10px;
+      background:var(--fondo);
+      color:var(--texto);
+      font-size:16px;
+    }
+
+    .page{
+      max-width:1100px;
+      margin:0 auto;
+    }
+
+    /* INTRO / SPLASH */
+    .splash-overlay{
+      position:fixed;
+      inset:0;
+      background:var(--rojo);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      z-index:9999;
+      animation:splashFade 2.7s ease-in-out forwards;
+    }
+    .splash-logo-wrapper{
+      text-align:center;
+      color:#ffffff;
+    }
+    .splash-logo-circle{
+      width:96px;
+      height:96px;
+      border-radius:50%;
+      border:4px solid var(--amarillo);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:56px;
+      font-weight:900;
+      color:var(--amarillo);
+      box-shadow:0 6px 18px rgba(0,0,0,0.4);
+      margin:0 auto 12px;
+      background:rgba(0,0,0,0.15);
+      animation:splashLogo 2.7s ease-in-out forwards;
+    }
+    .splash-text-main{
+      font-size:1.4rem;
+      font-weight:800;
+      letter-spacing:1px;
+    }
+    .splash-text-sub{
+      font-size:0.95rem;
+      margin-top:3px;
+      opacity:0.9;
+    }
+
+    @keyframes splashFade{
+      0%{opacity:0;}
+      10%{opacity:1;}
+      70%{opacity:1;}
+      100%{opacity:0;visibility:hidden;}
+    }
+    @keyframes splashLogo{
+      0%{transform:scale(0.7);opacity:0;}
+      20%{transform:scale(1.05);opacity:1;}
+      60%{transform:scale(1);opacity:1;}
+      100%{transform:scale(0.9);opacity:0;}
+    }
+
+    /* CABECERA */
+    .header{
+      background:var(--card);
+      border-radius:8px;
+      padding:10px 12px;
+      border:1px solid var(--borde);
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-bottom:10px;
+    }
+    .header-left{
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+    .logo{
+      width:44px;
+      height:44px;
+      border-radius:50%;
+      background:var(--rojo);
+      color:var(--amarillo);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:900;
+      font-size:26px;
+      box-shadow:0 3px 8px rgba(0,0,0,0.25);
+    }
+    .header-title{
+      margin:0;
+      font-size:1.3rem;
+      font-weight:800;
+      color:var(--rojo);
+    }
+    .header-sub{
+      margin:2px 0 0;
+      font-size:0.9rem;
+      color:var(--texto-suave);
+    }
+    .header-right{
+      display:flex;
+      flex-direction:column;
+      align-items:flex-end;
+      gap:6px;
+    }
+    .chip{
+      background:#ffe8e8;
+      color:var(--rojo-osc);
+      padding:3px 8px;
+      border-radius:999px;
+      font-size:0.8rem;
+      font-weight:600;
+    }
+
+    /* LAYOUT APP CALCOS */
+    .layout{
+      display:flex;
+      gap:20px;
+      align-items:flex-start;
+      margin-top:10px;
+    }
+
+    .panel{
+      background:var(--card);
+      padding:12px;
+      border-radius:8px;
+      border:1px solid var(--borde);
+      width:260px;
+      max-height:80vh;
+      overflow-y:auto;
+    }
+
+    .panel h3{
+      margin-top:0;
+      margin-bottom:8px;
+      font-size:1rem;
+      color:var(--rojo-osc);
+    }
+
+    .calco-form{
+      border:1px solid var(--borde);
+      border-radius:6px;
+      padding:8px;
+      margin-bottom:8px;
+      background:#fffdf8;
+    }
+
+    .calco-form h4{
+      margin:0 0 4px 0;
+      font-size:0.9rem;
+      color:var(--rojo-osc);
+    }
+
+    .calco-form label{
+      display:block;
+      font-size:0.75rem;
+      font-weight:700;
+      margin-top:4px;
+      color:var(--texto-suave);
+    }
+
+    .calco-form input[type="text"]{
+      width:100%;
+      padding:4px 6px;
+      font-size:0.8rem;
+      margin-top:1px;
+      border-radius:4px;
+      border:1px solid #cccccc;
+    }
+
+    .calco-form input[type="text"]:focus{
+      outline:none;
+      border-color:var(--rojo);
+    }
+
+    /* BOTONES FLOTANTES */
+    .buttons-main{
+      position:fixed;
+      right:18px;
+      bottom:18px;
+      z-index:9000;
+      display:flex;
+      flex-direction:column;
+      align-items:flex-end;
+      gap:6px;
+      padding:8px 10px;
+      background:var(--card);
+      border-radius:999px;
+      border:1px solid var(--borde);
+      box-shadow:0 4px 12px rgba(0,0,0,0.25);
+    }
+
+    button{
+      padding:6px 10px;
+      font-size:0.8rem;
+      cursor:pointer;
+      border-radius:999px;
+      border:1px solid var(--rojo);
+      font-weight:700;
+      background:#ffffff;
+      color:var(--rojo);
+      white-space:nowrap;
+    }
+    button:hover{
+      background:#fff5f5;
+    }
+
+    /* CUADRO FLOTANTE BUSCADOR CILINDRO */
+    .cyl-float{
+      position:fixed;
+      right:18px;
+      top:90px;
+      z-index:8000;
+      width:260px;
+      background:var(--card);
+      border-radius:10px;
+      border:1px solid var(--borde);
+      box-shadow:0 3px 10px rgba(0,0,0,0.18);
+      padding:8px 10px;
+      font-size:0.85rem;
+    }
+    .cyl-float-title{
+      margin:0 0 4px 0;
+      font-size:0.9rem;
+      font-weight:800;
+      color:var(--rojo-osc);
+    }
+    .cyl-float label{
+      display:block;
+      font-size:0.75rem;
+      font-weight:700;
+      margin-top:4px;
+      color:var(--texto-suave);
+    }
+    #cyl-code-input{
+      width:100%;
+      padding:4px 6px;
+      font-size:0.85rem;
+      border-radius:4px;
+      border:1px solid #cccccc;
+      margin-top:2px;
+    }
+    #cyl-code-input:focus{
+      outline:none;
+      border-color:var(--rojo);
+    }
+    #cyl-result{
+      margin-top:4px;
+      font-size:0.8rem;
+      color:var(--texto-suave);
+    }
+    #cyl-result strong{
+      color:var(--rojo-osc);
+    }
+
+    /* Hojas A4 */
+    #sheets-container{
+      display:flex;
+      flex-direction:column;
+      gap:20px;
+      flex:1;
+    }
+
+    .sheet{
+      position:relative;
+      width:210mm;
+      height:297mm;
+      background:#ffffff;
+      box-shadow:0 0 6px rgba(0,0,0,0.25);
+      page-break-after:always;
+      border-radius:4px;
+    }
+
+    .label-area{
+      position:absolute;
+      width:100mm;
+      height:80mm;
+      pointer-events:none;
+      border:1px dashed rgba(255,0,0,0.3); /* guía en pantalla */
+    }
+
+    /* Texto calcos */
+    .field-value{
+      position:absolute;
+      left:calc(52% - 50mm);
+      margin-top:-27mm;
+      transform:translateY(-50%);
+      font-size:13pt;
+      font-weight:600;
+      white-space:nowrap;
+    }
+
+    .label-area.right-col .field-value{
+      left:calc(52% - 30mm); /* corrige columna derecha */
+    }
+
+    .marca{ top:38.9%; }
+
+    .serie{
+      top:48.8%;
+      font-size:15pt;
+      font-weight:700;
+      letter-spacing:0.4px;
+    }
+
+    .cap{ top:58.8%; }
+    .diam{ top:68.7%; }
+    .venc{ top:78.6%; }
+
+    .taller{
+      top:88.5%;
+      font-size:15pt;
+      font-weight:700;
+      letter-spacing:0.5px;
+    }
+
+    @media print{
+      body{
+        background:#ffffff;
+        font-size:14px;
+        padding:0;
+      }
+      .splash-overlay{
+        display:none !important;
+      }
+      .panel,
+      .header,
+      .buttons-main,
+      .cyl-float{
+        display:none !important;
+      }
+      .sheet{
+        box-shadow:none;
+        page-break-after:always;
+      }
+      .label-area{
+        border-color:transparent;
+      }
+    }
+
+    @media(max-width:900px){
+      .layout{
+        flex-direction:column;
+      }
+      .sheet{
+        width:100%;
+        height:auto;
+      }
+      .buttons-main{
+        right:50%;
+        transform:translateX(50%);
+        flex-direction:row;
+      }
+      .cyl-float{
+        right:50%;
+        transform:translateX(50%);
+        top:auto;
+        bottom:90px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- INTRO CRPC CALCOS -->
+  <div id="splash" class="splash-overlay">
+    <div class="splash-logo-wrapper">
+      <div class="splash-logo-circle">Q</div>
+      <div class="splash-text-main">CRPC Quiroga</div>
+      <div class="splash-text-sub">CRPC CALCOS</div>
+    </div>
+  </div>
+
+  <div class="page">
+    <!-- CABECERA -->
+    <header class="header">
+      <div class="header-left">
+        <div class="logo">Q</div>
+        <div>
+          <h1 class="header-title">CRPC CALCOS</h1>
+          <p class="header-sub">Carga rápida e impresión alineada de calcomanías para cilindros.</p>
+        </div>
+      </div>
+      <div class="header-right">
+        <div class="chip">Uso interno CRPC</div>
+      </div>
+    </header>
+
+    <!-- APP CALCOS -->
+    <div class="layout">
+      <!-- Panel lateral -->
+      <div class="panel">
+        <h3>Datos de calcomanías</h3>
+        <div id="forms-container"></div>
+      </div>
+
+      <!-- Hojas A4 -->
+      <div id="sheets-container"></div>
+    </div>
+  </div>
+
+  <!-- Cuadro flotante de consulta rápida de cilindros -->
+  <div class="cyl-float">
+    <p class="cyl-float-title">Consulta rápida de cilindro</p>
+    <label for="cyl-code-input">Código del cilindro</label>
+    <input type="text" id="cyl-code-input" placeholder="Ej: KH15, CM01, INPROSIL ER54..." autocomplete="off">
+    <div id="cyl-result">Ingresá un código.</div>
+  </div>
+
+  <!-- Botones flotantes -->
+  <div class="buttons-main">
+    <button type="button" id="btn-add">Agregar calco</button>
+    <button type="button" id="btn-print">Imprimir</button>
+    <button type="button" id="btn-clear">Limpiar todo</button>
+  </div>
+
+  <!-- Script con el mapa de cilindros (archivo externo con TODOS los códigos) -->
+  <script>
+  const CILINDROS = {
+    "AR00": "AR00 - 323/200/44",
+    "AR01": "AR01 - 323/200/47",
+    "AR02": "AR02 - 323/200/50",
+    "AR03": "AR03 - 323/200/52",
+    "AR04": "AR04 - 323/200/54",
+    "AR05": "AR05 - 323/200/56",
+    "AR06": "AR06 - 323/200/58",
+    "AR07": "AR07 - 323/200/60",
+    "AR08": "AR08 - 323/200/65",
+    "AR09": "AR09 - 323/200/75",
+    "AR10": "AR10 - 323/200/80",
+    "AR11": "AR11 - 323/200/100",
+    "AR12": "AR12 - 323/200/120",
+    "AR13": "AR13 - 323/200/140",
+    "AR14": "AR14 - 244/200/27",
+    "AR15": "AR15 - 244/200/28",
+    "AR16": "AR16 - 244/200/30",
+    "AR17": "AR17 - 244/200/32",
+    "AR18": "AR18 - 244/200/34",
+    "AR19": "AR19 - 244/200/36",
+    "AR20": "AR20 - 244/200/38",
+    "AR21": "AR21 - 244/200/50",
+    "AR22": "AR22 - 244/200/60",
+    "AR23": "AR23 - 244/200/40",
+    "AR24": "AR24 - 244/200/70",
+    "AR25": "AR25 - 244/200/80",
+    "AR26": "AR26 - 244/200/85",
+    "AR27": "AR27 - 244/200/95",
+    "AR28": "AR28 - 244/200/100",
+    "AR29": "AR29 - 244/200/105",
+    "BY01": "BY01 - 62.356",
+    "BY02": "BY02 - 40.267",
+    "BY03": "BY03 - 57.324",
+    "BY04": "BY04 - 027BIX200X",
+    "BY05": "BY05 - 040OIX200X",
+    "BY06": "BY06 - 057KIX200X",
+    "BY07": "BY07 - 065YIX200X",
+    "CB00": "CB00 - 39.260.200",
+    "CB01": "CB01 - 273",
+    "CB02": "CB02 - 273",
+    "CB03": "CB03 - 273",
+    "CB04": "CB04 - 271",
+    "CB05": "CB05 - 271",
+    "CB06": "CB06 - 65-323-200",
+    "CB07": "CB07 - 49-244-200",
+    "CB08": "CB08 - 61-323-200",
+    "CB09": "CB09 - 56-323-200",
+    "CB10": "CB10 - 65-340-200",
+    "CB11": "CB11 - 61-334-200",
+    "CB12": "CB12 - 55-334-200",
+    "CB13": "CB13 - 59-244-200",
+    "CB14": "CB14 - 37-244-200",
+    "CB15": "CB15 - 33-244-200",
+    "CB16": "CB16 - 267",
+    "CB17": "CB17 - 244-250ESTAC",
+    "CB18": "CB18 - 60-244-200",
+    "CB19": "CB19 - 50-244-200",
+    "CB20": "CB20 - 59.340.200",
+    "CB21": "CB21 - 40-269-200",
+    "CB22": "CB22 - 80-269-200",
+    "CB23": "CB23 - 273-250ESTAC",
+    "CB24": "CB24 - 244-250ESTAC",
+    "CB25": "CB25 - 273-250ESTAC",
+    "CB26": "CB26 - 100.340.250",
+    "CB27": "CB27 - 75-340-200",
+    "CB28": "CB28 - 90.340.200",
+    "CB29": "CB29 - 100-340-200",
+    "CB30": "CB30 - 107-340-200",
+    "CB31": "CB31 - 273-250ESTAC",
+    "CB32": "CB32 - 30.230.200",
+    "CB33": "CB33 - 33-340-200",
+    "CB34": "CB34 - 28-230-200",
+    "CB35": "CB35 - 45-230-200",
+    "CB36": "CB36 - 53-230-200",
+    "CB37": "CB37 - 51-355-200",
+    "CB38": "CB38 - 60-356-200",
+    "CB39": "CB39 - 63-356-200",
+    "CB40": "CB40 - 64-356-200",
+    "CB41": "CB41 - 69-356-200",
+    "CB42": "CB42 - 71-356-200",
+    "CB43": "CB43 - 82-356-200",
+    "CB44": "CB44 - 100-356-200",
+    "CB45": "CB45 - 120-356-200",
+    "CB46": "CB46 - 135-356-200",
+    "CB47": "CB47 - 47-340-200",
+    "CB48": "CB48 - 50/323/200",
+    "CB49": "CB49 - 58/323/200",
+    "CB50": "CB50 - 60/323/200",
+    "CB51": "CB51 - 76/323/200",
+    "CB52": "CB52 - 84/323/200",
+    "CB53": "CB53 - 100/323/200",
+    "CB54": "CB54 - 125.340.250",
+    "CB55": "CB55 - 105.340.250",
+    "CB56": "CB56 - 29-235-200",
+    "CB57": "CB57 - 32-235-200",
+    "CB58": "CB58 - 50-235-200",
+    "CB59": "CB59 - 24-219-200",
+    "CB60": "CB60 - 40-219-200",
+    "CB61": "CB61 - 27-235-200",
+    "CB62": "CB62 - 120.340.250",
+    "CB63": "CB63 - 68.340.200",
+    "CB64": "CB64 - 120/340/200",
+    "CB65": "CB65 - 80-390-200",
+    "CB66": "CB66 - 83-390-200",
+    "CB67": "CB67 - 76-390-200",
+    "CB68": "CB68 - 55-340-200",
+    "CB69": "CB69 - 60-340-200",
+    "CB70": "CB70 - 61-340-200",
+    "CB71": "CB71 - 63-340-200",
+    "CB72": "CB72 - 80-340-200",
+    "CB73": "CB73 - 37-244-200",
+    "CB74": "CB74 - 38-244-200",
+    "CB75": "CB75 - 34-244-200",
+    "CB76": "CB76 - 33-244-200",
+    "CB77": "CB77 - 59-244-200",
+    "CB78": "CB78 - 40.273.200",
+    "CB79": "CB79 - 49.273.200",
+    "CB80": "CB80 - 74.370.200",
+    "CB81": "CB81 - 58.370.200",
+    "CB82": "CB82 - 65.370.200",
+    "CB83": "CB83 - 70.370.200",
+    "CB84": "CB84 - 78.370.200",
+    "CB85": "CB85 - 57.340.200",
+    "CB86": "CB86 - 140-323-200",
+    "CB87": "CB87 - 49-244-200",
+    "CB88": "CB88 - 37-244-200",
+    "CB89": "CB89 - 140-356-200",
+    "CB90": "CB90 - 144-356-200",
+    "CB91": "CB91 - 271-38-200 MeMn",
+    "CB92": "CB92 - 34-244-200",
+    "CB93": "CB93 - 49-244-200",
+    "CB94": "CB94 - 59-244-200-MeMn",
+    "CB95": "CB95 - 87-390-200",
+    "CB96": "CB96 - 90-390-200",
+    "CB97": "CB97 - 100.390.200",
+    "CB98": "CB98 - 45.273.200",
+    "CB99": "CB99 - 36.260.200",
+    "CD01": "CD01 - 323-20-47-01",
+    "CD02": "CD02 - 323-20-50-01",
+    "CD03": "CD03 - 323-20-54-01",
+    "CD04": "CD04 - 323-20-58-01",
+    "CD05": "CD05 - 323-20-60-01",
+    "CD06": "CD06 - 323-20-62-01",
+    "CD07": "CD07 - 323-20-65-01",
+    "CD08": "CD08 - 323-20-75-01",
+    "CD09": "CD09 - 323-20-80-01",
+    "CD10": "CD10 - 323-20-90-01",
+    "CD11": "CD11 - 323-20-43-01",
+    "CD21": "CD21 - 323-20-43-02 / CD21 - 323-20-43-03",
+    "CD22": "CD22 - 323-20-47-03",
+    "CD23": "CD23 - 323-20-50-03",
+    "CD24": "CD24 - 323-20-54-03",
+    "CD25": "CD25 - 323-20-58-03",
+    "CD26": "CD26 - 323-20-60-03",
+    "CD27": "CD27 - 323-20-62-03",
+    "CD28": "CD28 - 323-20-65-03",
+    "CD29": "CD29 - 323-20-75-03",
+    "CD30": "CD30 - 323-20-80-03",
+    "CD31": "CD31 - 323-20-90-03",
+    "CD41": "CD41 - 323-20-43-03",
+    "CD42": "CD42 - 323-20-47-03",
+    "CD43": "CD43 - 323-20-50-03",
+    "CD44": "CD44 - 323-20-54-03",
+    "CD45": "CD45 - 323-20-58-03",
+    "CD46": "CD46 - 323-20-60-03",
+    "CD47": "CD47 - 323-20-62-03",
+    "CD48": "CD48 - 323-20-65-03",
+    "CD49": "CD49 - 323-20-75-03",
+    "CD50": "CD50 - 323-20-80-03",
+    "CD51": "CD51 - 323-20-90-03",
+    "CD61": "CD61 - 340-20-50--01",
+    "CD62": "CD62 - 340-20-54-01",
+    "CD63": "CD63 - 340-20-58-01",
+    "CD64": "CD64 - 340-20-60-01",
+    "CD65": "CD65 - 340-20-65-01",
+    "CD66": "CD66 - 340-20-75-01",
+    "CD67": "CD67 - 340-20-80-01",
+    "CD68": "CD68 - 340-20-90-01",
+    "CD69": "CD69 - 340-20-100-01",
+    "CD70": "CD70 - 340-20-120-01",
+    "CG00": "CG00 - 340-20-125-01",
+    "CG01": "CG01 - 273-20-30-01",
+    "CG02": "CG02 - 273-20-39-01",
+    "CG03": "CG03 - 273-20-40-01",
+    "CG04": "CG04 - 273-20-45-01",
+    "CG05": "CG05 - 273-20-50-01",
+    "CG06": "CG06 - 273-20-60-01",
+    "CG11": "CG11 - 244-20-30-01",
+    "CG12": "CG12 - 244-20-34-01",
+    "CG13": "CG13 - 244-20-37-01",
+    "CG14": "CG14 - 244-20-38-01",
+    "CG15": "CG15 - 244-20-40-01",
+    "CG16": "CG16 - 244-20-50-01",
+    "CG17": "CG17 - 244-20-60-01",
+    "CG21": "CG21 - 244-20-30-03",
+    "CG22": "CG22 - 244-20-34-03",
+    "CG23": "CG23 - 244-20-37-03",
+    "CG24": "CG24 - 244-20-38-03",
+    "CG25": "CG25 - 244-20-40-03",
+    "CG26": "CG26 - 244-20-50-03",
+    "CG27": "CG27 - 244-20-60-03",
+    "CG31": "CG31 - 280-20-35-01",
+    "CG32": "CG32 - 280-20-40-01",
+    "CG33": "CG33 - 280-20-43-01",
+    "CG34": "CG34 - 280-20-45-01",
+    "CG35": "CG35 - 280-20-50-01",
+    "CG36": "CG36 - 280-20-55-01",
+    "CG37": "CG37 - 280-20-60-01",
+    "CG38": "CG38 - 280-20-30-01",
+    "CG39": "CG39 - 280-20-33-01",
+    "CG40": "CG40 - 355-20-60-01",
+    "CG41": "CG41 - 355-20-65-01",
+    "CG42": "CG42 - 355-20-70-01",
+    "CG43": "CG43 - 355-20-75-01",
+    "CG44": "CG44 - 355-20-80-01",
+    "CG45": "CG45 - 355-20-90-01",
+    "CG46": "CG46 - 355-20-100-01",
+    "CG47": "CG47 - 355-20-120-01",
+    "CG48": "CG48 - 355-20-130-01",
+    "CG49": "CG49 - 355-20-140-01",
+    "CG50": "CG50 - 273-20-35-01",
+    "CG51": "CG51 - 355E-21-60-01 ALT1",
+    "CG52": "CG52 - 355E-21-80-01 ALT1",
+    "CG53": "CG53 - 355E-21-90-01 ALT1",
+    "CG54": "CG54 - 355E-21-95-01 ALT1",
+    "CG55": "CG55 - 355E-21-100-01 ALT1",
+    "CG56": "CG56 - 355E-21-110-01 ALT1",
+    "CG57": "CG57 - 355E-21-120-01 ALT1",
+    "CG58": "CG58 - 355E-21-125-01 ALT1",
+    "CG59": "CG59 - 355E-21-130-01 ALT1",
+    "CG60": "CG60 - 355E-21-140-01 ALT1",
+    "CG61": "CG61 - 355E-21-60-01 ALT2",
+    "CG62": "CG62 - 355E-21-80-01 ALT2",
+    "CG63": "CG63 - 355E-21-90-01 ALT2",
+    "CG64": "CG64 - 355E-21-95-01 ALT2",
+    "CG65": "CG65 - 355E-21-100-01 ALT2",
+    "CG66": "CG66 - 355E-21-110-01 ALT2",
+    "CG67": "CG67 - 355E-21-120-01 ALT2",
+    "CG68": "CG68 - 355E-21-125-01 ALT2",
+    "CG69": "CG69 - 355E-21-130-01 ALT2",
+    "CG70": "CG70 - 355E-21-140-01 ALT2",
+    "CG71": "CG71 - 323-20-45-03",
+    "CG72": "CG72 - 323-20-56-03",
+    "CG73": "CG73 - 323-20-100-03",
+    "CG74": "CG74 - 323.20-120-03",
+    "CG75": "CG75 - 232-20-23-01",
+    "CG76": "CG76 - 232-20-25-01",
+    "CG77": "CG77 - 232-20-28-01",
+    "CG78": "CG78 - 232-20-30-01",
+    "CG79": "CG79 - 232-20-32-01",
+    "CG80": "CG80 - 232-20-35-01",
+    "CG81": "CG81 - 232-20-38-01",
+    "CG82": "CG82 - 232-20-39-01",
+    "CG83": "CG83 - 232-20-40-01",
+    "CG84": "CG84 - 232-20-45-01",
+    "CG85": "CG85 - 232-20-50-01",
+    "CG86": "CG86 - 232-20-55-01",
+    "CG87": "CG87 - 340-20-50-01",
+    "CG88": "CG88 - 340-20-54-01",
+    "CG89": "CG89 - 340-20-58-01",
+    "CG90": "CG90 - 340-20-60-01",
+    "CG91": "CG91 - 340-20-65-01",
+    "CG92": "CG92 - 340-20-62-01",
+    "CG93": "CG93 - 340-20-70-01",
+    "CG94": "CG94 - 340-20-75-01",
+    "CG95": "CG95 - 240-20-80-01",
+    "CG96": "CG96 - 340-20-90-01",
+    "CG97": "CG97 - 340-20-100-01",
+    "CG98": "CG98 - 340-20-110-01",
+    "CG99": "CG99 - 340-20-120-01",
+    "CL00": "CL00 - 45.273.200",
+    "CL01": "CL01 - 40.273.200",
+    "CL02": "CL02 - 49.273.200",
+    "CL03": "CL03 - 32.244.200",
+    "CL04": "CL04 - 77.356.200",
+    "CL05": "CL05 - 90.356.200",
+    "CL06": "CL06 - 55.323.200",
+    "CL07": "CL07 - 66.323.200",
+    "CL08": "CL08 - 58.323.200",
+    "CL09": "CL09 - 66.323.200",
+    "CL10": "CL10 - 30.244.200",
+    "CL11": "CL11 - 37.244.200",
+    "CL12": "CL12 - 37.260.200",
+    "CL13": "CL13 - 60.356.200",
+    "CL14": "CL14 - 65.356.200",
+    "CL15": "CL15 - 70.356.200",
+    "CL16": "CL16 - 65.365.200",
+    "CL17": "CL17 - 70.365.200",
+    "CL18": "CL18 - 78.365.200",
+    "CL19": "CL19 - 140.340.250",
+    "CL20": "CL20 - 140.340.200",
+    "CL21": "CL21 - 120.390.200",
+    "CL22": "CL22 - 65.340.200 CrMo CUP",
+    "CL23": "CL23 - 59.340.200 CrMo CUP",
+    "CL24": "CL24 - 40.260.200 CrMO CUP",
+    "CL25": "CL25 - 36.260.200 CrMo CUP",
+    "CL26": "CL26 - 60.340.200 CrMo CUP",
+    "CL27": "CL27 - 80.273.250 CrMo",
+    "CL28": "CL28 - 38.262.200 CrMo CUP",
+    "CL29": "CL29 - 147.340.250",
+    "CL30": "CL30 - 149.356.200 CrMo",
+    "CL31": "CL31 - 149.356.200",
+    "CL32": "CL32 - 149.340.25",
+    "CL40": "CL40 - 55.323.200 CRMO",
+    "CL41": "CL41 - 58.323.200 CRMO",
+    "CL42": "CL42 - 83.390.200 CRMO CUP",
+    "CL43": "CL43 - 66.356.200 CRMO CUP",
+    "CL44": "CL44 - 39.260.200 CRMO CUP",
+    "CL45": "CL45 - 55.323.200 CRMO CUP",
+    "CM01": "CM01 - LC30",
+    "CM02": "CM02 - LC34",
+    "CM03": "CM03 - LC38",
+    "CM04": "CM04 - LC40",
+    "CM05": "CM05 - LC50",
+    "CM06": "CM06 - LC60",
+    "CM07": "CM07 - 244/250 ESTAC",
+    "CM08": "CM08 - 244/200",
+    "CS01": "CS01 - 244-20-26-03",
+    "CS02": "CS02 - 244-20-28-03",
+    "CS03": "CS03 - 244-20-32-03",
+    "CS04": "CS04 - 244-20-36-03",
+    "CS05": "CS05 - 273E-21-68-01 ALT.1",
+    "CS06": "CS06 - 273E-21-70-01 ALT.1",
+    "CS07": "CS07 - 273E-21-75-01 ALT.1",
+    "CS08": "CS08 - 273E-21-80-01 ALT.1",
+    "CS09": "CS09 - 273E-21-85-01 ALT.1",
+    "CS10": "CS10 - 273E-21-90-01 ALT.1",
+    "CS11": "CS11 - 273E-21-95-01 ALT.1",
+    "CS12": "CS12 - 273E-21-100-01 ALT.1",
+    "CS13": "CS13 - 273E-21-68-01 ALT.2",
+    "CS14": "CS14 - 273E-21-70-01 ALT.2",
+    "CS15": "CS15 - 273E-21-75-01 ALT.2",
+    "CS16": "CS16 - 273E-21-80-01 ALT.2",
+    "CS17": "CS17 - 273E-21-85-01 ALT.2",
+    "CS18": "CS18 - 273E-21-90-01 ALT.2",
+    "CS19": "CS19 - 273E-21-95-01 ALT.2",
+    "CS20": "CS20 - 273E-21-100-01 ALT.2",
+    "CS21": "CS21 - 360E-21-100-01",
+    "CS22": "CS22 - 360E-21-105-01",
+    "CS23": "CS23 - 360E-21-110-01",
+    "CS24": "CS24 - 360E-21-120-01",
+    "CS25": "CS25 - 360E-21-125-01",
+    "CS26": "CS26 - 360E-21-140-01",
+    "CS27": "CS27 - 360E-21-150-01",
+    "CS28": "CS28 - 360E-21-160-01",
+    "CS29": "CS29 - 355-21-150-01",
+    "CS30": "CS30 - 355E-20-65-01 ALT. 1",
+    "CS31": "CS31 - 355E-20-70-01 ALT. 1",
+    "CS32": "CS32 - 355E-21-150-01 ALT.1",
+    "CS33": "CS33 - 355E-20-65-01 ALT. 2",
+    "CS34": "CS34 - 355E-20-70-01 ALT 2.",
+    "CS35": "CS35 - 355E-20-150-01 ALT. 2",
+    "CS36": "CS36 - 360-20-50-01ALT.1",
+    "CS37": "CS37 - 360-20-55-01ALT.1",
+    "CS38": "CS38 - 360-20-60-01ALT.1",
+    "CS39": "CS39 - 360-20-62-01ALT.1",
+    "CS40": "CS40 - 360-20-65-01ALT.1",
+    "CS41": "CS41 - 360-20-68-01ALT.1",
+    "CS42": "CS42 - 360-20-70-01ALT.1",
+    "CS43": "CS43 - 360-20-75-01ALT.1",
+    "CS44": "CS44 - 360-20-80-01ALT.1",
+    "CS45": "CS45 - 360-20-85-01ALT.1",
+    "CS46": "CS46 - 360-20-90-01ALT.1",
+    "CS47": "CS47 - 360-20-95-01ALT.1",
+    "CS48": "CS48 - 360-20-100-01ALT.1",
+    "CS49": "CS49 - 360-20-105-01ALT.1",
+    "CS50": "CS50 - 360-20-110-01ALT.1",
+    "CS51": "CS51 - 232-20-21-01",
+    "CS52": "CS52 - 232-20-33-01",
+    "CS53": "CS53 - 360-20-65-01ALT.2",
+    "CS54": "CS54 - 360-20-50-01ALT.2",
+    "CS55": "CS55 - 360-20-55-01ALT.2",
+    "CS56": "CS56 - 360-20-60-01ALT.2",
+    "CS57": "CS57 - 360-20-62-01ALT.2",
+    "CS58": "CS58 - 360-20-68-01ALT.2",
+    "CS59": "CS59 - 360-20-70-01ALT.2",
+    "CS60": "CS60 - 360-20-75-01ALT.2",
+    "CS61": "CS61 - 360-20-80-01ALT.2",
+    "CS62": "CS62 - 60-20-85-01ALT.2",
+    "CS63": "CS63 - 360-20-90-01ALT.2",
+    "CS64": "CS64 - 360-20-95-01ALT.2",
+    "CS65": "CS65 - 360-20-100-01ALT.2",
+    "CS66": "CS66 - 360-20-105-01ALT.2",
+    "CS67": "CS67 - 360-20-110-01ALT.2",
+    "CS68": "CS68 - 355-20-62-01",
+    "CS69": "CS69 - 355-20-63-01",
+    "CS70": "CS70 - 355-20-64-01",
+    "CS71": "CS71 - 355-20-67-01",
+    "CS72": "CS72 - 273-20-65-01",
+    "CS73": "CS73 - 273-20-70-01",
+    "CS74": "CS74 - 273-20-80-01",
+    "CS75": "CS75 - 273-20-90-01",
+    "CS76": "CS76 - 273-20-100-01",
+    "CS77": "CS77 - 273-20-75-01",
+    "CS78": "CS78 - 273-20-87-01",
+    "CS79": "CS79 - 273-20-97-01",
+    "CS80": "CS80 - 360E-21-125-01 ALT.3",
+    "CS81": "CS81 - 360E-21-100-01 ALT.3",
+    "CS82": "CS82 - 360E-21-105-01 ALT.3",
+    "CS83": "CS83 - 360E-21-110-01 ALT.3",
+    "CS84": "CS84 - 360E-21-120-01 ALT.3",
+    "CS85": "CS85 - 360E-21-140-01 ALT.3",
+    "CS86": "CS86 - 360E-21-150-01 ALT.3",
+    "CS87": "CS87 - 232-20-21-03",
+    "CS88": "CS88 - 232-20-23-03",
+    "CS89": "CS89 - 232-20-24-03",
+    "CS90": "CS90 - 232-20-25-03",
+    "CS91": "CS91 - 232-20-28-03",
+    "CS92": "CS92 - 232-20-30-03",
+    "CS93": "CS93 - 232-20-32-03",
+    "CS94": "CS94 - 232-20-33-03",
+    "CS95": "CS95 - 232-20-35-03",
+    "CS96": "CS96 - 232-20-38-03",
+    "CS97": "CS97 - 232-20-39-03",
+    "CS98": "CS98 - 232-20-40-03",
+    "CS99": "CS99 - 232-20-45-03",
+    "CT01": "CT01 - CTCO 230/250",
+    "CT02": "CT02 - CHTCO230/250",
+    "CT03": "CT03 - 232-20-50-03",
+    "CT04": "CT04 - 232-20-55-03",
+    "CT05": "CT05 - 232-20-60-03",
+    "CT06": "CT06 - 323-20-XX-04 ALT.4",
+    "CT07": "CT07 - 323-20-XX-04 ALT.4",
+    "CT08": "CT08 - 323-20-XX-04 ALT.4",
+    "CT09": "CT09 - 323-20-XX-04 ALT.4",
+    "CT10": "CT10 - 323-20-XX-04 ALT.4",
+    "CT11": "CT11 - 323-20-XX-04 ALT.4",
+    "CT12": "CT12 - 323-20-XX-04 ALT.4",
+    "CT13": "CT13 - 323-20-XX-04 ALT.4",
+    "CT14": "CT14 - 323-20-XX-04 ALT.4",
+    "CT15": "CT15 - 323-20-XX-04 ALT.4",
+    "CT16": "CT16 - 323-20-XX-04 ALT.4",
+    "CT17": "CT17 - 323-20-XX-04 ALT.4",
+    "CT18": "CT18 - 323-20-XX-04 ALT.4",
+    "CT19": "CT19 - 323-20-XX-04 ALT.4",
+    "CT20": "CT20 - 323-20-XX-04 ALT.4",
+    "CT21": "CT21 - 323-20-XX-04 ALT.4",
+    "CT22": "CT22 - 323-20-XX-04 ALT.4",
+    "CT23": "CT23 - 323-20-43-04 ALT.4",
+    "CT24": "CT24 - 323-20-45-04 ALT.4",
+    "CT25": "CT25 - 323-20-47-04 ALT.4",
+    "CT26": "CT26 - 323-20-50-04 ALT.4",
+    "CT27": "CT27 - 323-20-54-04 ALT.4",
+    "CT28": "CT28 - 323-20-56-04 ALT.4",
+    "CT29": "CT29 - 323-20-58-04 ALT.4",
+    "CT30": "CT30 - 323-20-60-04 ALT.4",
+    "CT31": "CT31 - 323-20-62-04 ALT.4",
+    "CT32": "CT32 - 323-20-65-04 ALT.4",
+    "CT33": "CT33 - 323-20-75-04 ALT.4",
+    "CT34": "CT34 - 323-20-80-04 ALT.4",
+    "CT35": "CT35 - 323-20-90-04 ALT.4",
+    "CT36": "CT36 - 323-20-100-04 ALT.4",
+    "CT37": "CT37 - 323-20-120-04 ALT.4",
+    "CT38": "CT38 - 323-20-130-04 ALT.4",
+    "CT39": "CT39 - 323-20-140-04 ALT.4",
+    "CT40": "CT40 - 323-20-43-04 ALT.5",
+    "CT41": "CT41 - 323-20-45-04 ALT.5",
+    "CT42": "CT42 - 323-20-47-04 ALT.5",
+    "CT43": "CT43 - 323-20-50-04 ALT.5",
+    "CT44": "CT44 - 323-20-54-04 ALT.5",
+    "CT45": "CT45 - 323-20-56-04 ALT.5",
+    "CT46": "CT46 - 323-20-58-04 ALT.5",
+    "CT47": "CT47 - 323-20-60-04 ALT.5",
+    "CT48": "CT48 - 323-20-62-04 ALT.5",
+    "CT49": "CT49 - 323-20-65-04 ALT.5",
+    "CT50": "CT50 - 323-20-75-04 ALT.5",
+    "CT51": "CT51 - 323-20-80-04 ALT.5",
+    "CT52": "CT52 - 323-20-90-04 ALT.5",
+    "CT53": "CT53 - 323-20-100-04 ALT.5",
+    "CT54": "CT54 - 323-20-120-04 ALT.5",
+    "CT55": "CT55 - 323-20-130-04 ALT.5",
+    "CT56": "CT56 - 323-20-140-04 ALT.5",
+    "CT57": "CT57 - 244-20-26-04 ALT4",
+    "CT58": "CT58 - 244-20-28-04 ALT4",
+    "CT59": "CT59 - 244-20-29-04 ALT4",
+    "CT60": "CT60 - 244-20-30-04 ALT4",
+    "CT61": "CT61 - 244-20-32-04 ALT4",
+    "CT62": "CT62 - 244-20-34-04 ALT4",
+    "CT63": "CT63 - 244-20-36-04 ALT4",
+    "CT64": "CT64 - 244-20-40-04 ALT4",
+    "CT65": "CT65 - 244-20-50-04 ALT4",
+    "CT66": "CT66 - 244-20-60-04 ALT4",
+    "DA01": "DA01 - 273",
+    "DA02": "DA02 - 273",
+    "DA03": "DA03 - 273",
+    "DA04": "DA04 - 273",
+    "DA05": "DA05 - 273",
+    "DA06": "DA06 - 273",
+    "DA07": "DA07 - 227",
+    "DA08": "DA08 - 227",
+    "DA09": "DA09 - 273 /250 ESTA",
+    "DA10": "DA10 - 227 /250 ESTA",
+    "DA11": "DA11 - 227 /250 ESTA",
+    "DA12": "DA12 - FD 3 D 01 AR",
+    "DA13": "DA13 - FD 3 D 01 AR",
+    "DA14": "DA14 - FD 3 D 01 AR",
+    "DA15": "DA15 - FD 3 D 01 AR",
+    "DA16": "DA16 - AR00-4-E-300-n-1",
+    "DA17": "DA17 - AR00-4-E-300-n-1",
+    "DA18": "DA18 - AR00-4-E-300-n-1",
+    "DA19": "DA19 - AR00-4-E-300-n-1",
+    "DA20": "DA20 - AR00-4-E-300-n-1",
+    "DA21": "DA21 - AR00-4-E-300-n-1",
+    "DA22": "DA22 - AR00-4-E-300-n-1",
+    "DA23": "DA23 - AR00-4-E-300-n-1",
+    "DA24": "DA24 - AR00-4-E-300-n-1",
+    "DA25": "DA25 - AR00-4-C-300-",
+    "DA26": "DA26 - AR00-4-C-300-",
+    "DA27": "DA27 - AR00-4-C-300-",
+    "DA28": "DA28 - AR00-4-C-300-",
+    "DA29": "DA29 - AR-13-C-300-N",
+    "DA30": "DA30 - AR-13-C-300-N",
+    "DA31": "DA31 - AR-13-C-300-N",
+    "DA32": "DA32 - AR-13-C-300-N",
+    "DA33": "DA33 - AR-13-C-300-N",
+    "DA34": "DA34 - AR-13-C-300-N",
+    "DA35": "DA35 - FD 3 D AR REV",
+    "DA36": "DA36 - FD 3 D AR REV",
+    "DA37": "DA37 - FD 3 D AR REV",
+    "DA38": "DA38 - FD 3 D AR REV",
+    "ER20": "ER20 - IPGN244060200",
+    "ER21": "ER21 - IPGN244050200",
+    "ER22": "ER22 - IPGN244030200",
+    "ER23": "ER23 - IPGN244034200",
+    "ER24": "ER24 - IPGN244-038-200",
+    "ER27": "ER27 - IP-GN 273.040-200",
+    "ER28": "ER28 - IP-GN-273.045.200",
+    "ER29": "ER29 - IP-GN 273.050-200",
+    "ER30": "ER30 - IP-GN 323.050-200",
+    "ER31": "ER31 - IP-GN 323.054-200",
+    "ER32": "ER32 - IP-GN 323.058-200",
+    "ER33": "ER33 - IP-GN 323.060-200",
+    "ER34": "ER34 - IP-GN 323.065-200",
+    "ER35": "ER35 - IP-GN 323.075-200",
+    "ER36": "ER36 - IP-GN 323.080-200",
+    "ER37": "ER37 - IP-GN 323.100-200",
+    "ER38": "ER38 - IP-GN 323.120-200",
+    "ER39": "ER39 - IP-GN 323.90-200",
+    "ER40": "ER40 - IP-GN 323.56-200",
+    "ER41": "ER41 - IP-GN 232.028.200",
+    "ER42": "ER42 - IP-GN 273.060-200",
+    "ER50": "ER50 - IP-GN 355.060-200",
+    "ER51": "ER51 - IP-GN 355.065-200",
+    "ER52": "ER52 - IP-GN 355.070-200",
+    "ER53": "ER53 - IP-GN 355.075.200",
+    "ER54": "ER54 - IP-GN 355.080.200",
+    "ER55": "ER55 - IP-GN 355.090.200",
+    "ER56": "ER56 - IP-GN 355.100.200",
+    "ER57": "ER57 - IP-GN 355.120-200",
+    "ER58": "ER58 - IP-GN 355.100-250",
+    "ER59": "ER59 - IP-GN 355.100-250",
+    "ER60": "ER60 - IP-GN 355.150-250",
+    "ER61": "ER61 - IP-GN244.28-200",
+    "ER62": "ER62 - IP-GN 273.38.200",
+    "ER63": "ER63 - IP-GN355.63.200",
+    "ER64": "ER64 - IP-GN 340.055.200",
+    "ER65": "ER65 - IP-GN 340.060.200",
+    "ER66": "ER66 - IP-GN 340.065.200",
+    "ER67": "ER67 - IP-GN 340.070.200",
+    "ER68": "ER68 - IP-GN 355.058-200",
+    "ER69": "ER69 - IP-GN 232.022-200",
+    "ER70": "ER70 - IP-GN 273.30.200",
+    "ER71": "ER71 - IP-GN.273.35.200",
+    "ER72": "ER72 - IP-GN 340.58.200",
+    "ER73": "ER73 - IPGN 355-58-200",
+    "ER74": "ER74 - IPGN 355-65-200",
+    "ER75": "ER75 - IP-GN 340.062.200",
+    "ER76": "ER76 - IP GN 340.080.200",
+    "ER77": "ER77 - IP GN  340.080.200",
+    "ER78": "ER78 - IP GN 340.080.200",
+    "ER79": "ER79 - IP GN 340.100.200",
+    "ER80": "ER80 - IP GN 355.085.200",
+    "ER81": "ER81 - INPE-GN 323.050.200",
+    "ER82": "ER82 - INPE-GN 323.054.200",
+    "ER83": "ER83 - INPE-GN 323.056.200",
+    "ER84": "ER84 - INPE-GN 323.058.200",
+    "ER85": "ER85 - INPE-GN 323.060.200",
+    "ER86": "ER86 - INPE-GN 323.065.200",
+    "ER87": "ER87 - INPE-GN 323.075.200",
+    "ER88": "ER88 - INPE-GN 323.080.200",
+    "ER89": "ER89 - INPE-GN 323.090.200",
+    "ER90": "ER90 - INPE-GN 323.100.200",
+    "ER91": "ER91 - INPE-GN 323.120.200",
+    "ER92": "ER92 - INPE-GN 340.055.200",
+    "ER93": "ER93 - INPE-GN 340.058.200",
+    "ER94": "ER94 - INPE-GN 340.060.200",
+    "ER95": "ER95 - INPE-GN 340.062.200",
+    "ER96": "ER96 - INPE-GN 340.065.200",
+    "ER97": "ER97 - INPE-GN 340.070.200",
+    "ER98": "ER98 - INPE-GN 355.058.200",
+    "ER99": "ER99 - INPE-GN 355.060.200",
+    "ES08": "ES08 - INPE-GN 355.063.200",
+    "ES09": "ES09 - INPE-GN 355.065.200",
+    "ES10": "ES10 - INPE-GN 355.070.200",
+    "ES11": "ES11 - INPE-GN 355.075.200",
+    "ES12": "ES12 - INPE-GN 355.080.200",
+    "ES13": "ES13 - INPE-GN 355.085.200",
+    "ES14": "ES14 - INPE-GN 355.090.200",
+    "ES15": "ES15 - INPE-GN 355.100.200",
+    "ES16": "ES16 - INPE-GN 355.120.200",
+    "ES17": "ES17 - IP-GN 232.025.200",
+    "ES18": "ES18 - IP-GE 355.060.200",
+    "ES19": "ES19 - IP-GE 355.065.200",
+    "ES20": "ES20 - IP-GE 355.070.200",
+    "ES21": "ES21 - IP-GE 355.075.200",
+    "ES22": "ES22 - IP-GE 355.080.200",
+    "ES23": "ES23 - IP-GE 355.090.200",
+    "ES24": "ES24 - IP-GE 355.100.200",
+    "ES25": "ES25 - IP-GE 355.120.200",
+    "ES26": "ES26 - IP-GE 355.150.200",
+    "ES27": "ES27 - IP-GE 340.055.200",
+    "ES28": "ES28 - IP-GE 340.058.200",
+    "ES29": "ES29 - IP-GE 340.060.200",
+    "ES30": "ES30 - IP-GE 340.062.200",
+    "ES31": "ES31 - IP-GE 340.065.200",
+    "ES32": "ES32 - IP-GE 340.070.200",
+    "ES33": "ES33 - IP-GE 340.080.200",
+    "ES34": "ES34 - IP-GE 340.100.200",
+    "ES35": "ES35 - IP-GE 355.050.200",
+    "ES36": "ES36 - IP-GE 323.054.200",
+    "ES37": "ES37 - IP-GE 323.058.200",
+    "ES38": "ES38 - IP-GE 323.060.200",
+    "ES39": "ES39 - IP-GE 323.065.200",
+    "ES40": "ES40 - IP-GE 323.075.200",
+    "ES41": "ES41 - IP-GE 323.080.200",
+    "ES42": "ES42 - IP-GE 323.090.200",
+    "ES43": "ES43 - IP-GE 323.095.200",
+    "ES44": "ES44 - IP-GE 323.100.200",
+    "ES45": "ES45 - IP-GE 323.118.200",
+    "ES46": "ES46 - IP-GE 323.120.200",
+    "ES47": "ES47 - IP-GN 323.45.200",
+    "ES48": "ES48 - IP-GN 323.50.200",
+    "ES49": "ES49 - IP-GN 323.54.200",
+    "ES50": "ES50 - IP-GN 323.56.200",
+    "ES51": "ES51 - IP-GN 323.58.200",
+    "ES52": "ES52 - IP-GN 323.60.200",
+    "ES53": "ES53 - IP-GN 323.65.200",
+    "ES54": "ES54 - IP-GN 323.75.200",
+    "ES55": "ES55 - IP-GN 323.80.200",
+    "ES56": "ES56 - IP-GN 323.90.200",
+    "ES57": "ES57 - IP-GN 323.100.200",
+    "ES58": "ES58 - IP-GN 323.120.200",
+    "ES59": "ES59 - IP-GN 340-55-200",
+    "ES60": "ES60 - IP-GN 340-58-.200",
+    "ES61": "ES61 - IP-GN 340-60-200",
+    "ES62": "ES62 - IP-GN 340-62-200",
+    "ES63": "ES63 - IP-GN 340-65-200",
+    "ES64": "ES64 - IP-GN 340-70-200",
+    "ES65": "ES65 - IP.GN.273.030.200",
+    "ES66": "ES66 - IP.GN.273.035.200",
+    "ES67": "ES67 - IP.GN.273.038.200",
+    "ES68": "ES68 - IP.GN.273.040.200",
+    "ES69": "ES69 - IP.GN.273.045.200",
+    "ES70": "ES70 - IP.GN.273.050.200",
+    "ES71": "ES71 - IP.GN.273.060.200",
+    "ES72": "ES72 - IPE.GN.323.125.250-IRAM2526",
+    "ES73": "ES73 - IP.GN.244.028.200",
+    "ES74": "ES74 - IP.GN.244.030.200",
+    "ES75": "ES75 - IP.GN.244.034.200",
+    "ES76": "ES76 - IP.GN.244.038.200",
+    "ES77": "ES77 - IP.GN.244.050.200",
+    "ES78": "ES78 - IP.GN.244.060.200",
+    "ES79": "ES79 - IP.GN.232.022.200",
+    "ES80": "ES80 - IP.GN.232.025.200",
+    "ES81": "ES81 - IP.GN.232.028.200",
+    "ES82": "ES82 - IP.GN.232.030.200",
+    "ES83": "ES83 - IP.GN.232.035.200",
+    "ES84": "ES84 - IP.ES.280.090.250",
+    "EU01": "EU01 - 270",
+    "EU02": "EU02 - 270",
+    "EU03": "EU03 - 270",
+    "EU04": "EU04 - 270",
+    "EU05": "EU05 - 270",
+    "EU06": "EU06 - 270",
+    "EU07": "EU07 - 270",
+    "EU08": "EU08 - 270",
+    "EU09": "EU09 - 230",
+    "EU10": "EU10 - 230",
+    "EU11": "EU11 - 230",
+    "EU12": "EU12 - 270",
+    "EU13": "EU13 - 270",
+    "EU14": "EU14 - 270",
+    "EU15": "EU15 - 316-800-200",
+    "EU16": "EU16 - 316-800-200",
+    "EU17": "EU17 - 316-800-200",
+    "EU18": "EU18 - 316-800-200",
+    "EU19": "EU19 - 316-800-200",
+    "EU20": "EU20 - 316-800-200",
+    "EU21": "EU21 - 316-800-200",
+    "FA01": "FA01 - RA-324-300-890",
+    "FA02": "FA02 - RA-355-300-84",
+    "FA03": "FA03 - RA-324-300-890",
+    "FA04": "FA04 - 316",
+    "FA05": "FA05 - RA-355-300-84",
+    "FA06": "FA06 - RA-324-300-890",
+    "FA07": "FA07 - RA-324-300-890",
+    "FA08": "FA08 - RA-324-300-890",
+    "FA09": "FA09 - RA-324-300-890",
+    "FA10": "FA10 - RA-390-300-84",
+    "FA11": "FA11 - RA-267-300-85",
+    "FA12": "FA12 - RA-355-300-840",
+    "FA13": "FA13 - 316",
+    "FA14": "FA14 - RA-355-300-840",
+    "FA15": "FA15 - RA-355-300-840",
+    "FA16": "FA16 - 316",
+    "FA17": "FA17 - 316",
+    "FA18": "FA18 - 316",
+    "FA19": "FA19 - 316",
+    "FA20": "FA20 - 316",
+    "FA21": "FA21 - 316",
+    "FA22": "FA22 - 316",
+    "FA23": "FA23 - RA-390-300-84",
+    "FA24": "FA24 - RA-267-300-85",
+    "FA25": "FA25 - RA-355-300-84",
+    "FA26": "FA26 - RA-390-300-84",
+    "FA27": "FA27 - RA-267-300-85",
+    "FA28": "FA28 - 229",
+    "FA29": "FA29 - RA-355-300-84",
+    "FA30": "FA30 - RA-390-300-84",
+    "FA31": "FA31 - RA-244-300-840",
+    "FA32": "FA32 - RA-244-300-840",
+    "FA33": "FA33 - RA-244-300-840",
+    "FA34": "FA34 - RA-355-300-840",
+    "FA35": "FA35 - RA-355-300-840",
+    "FA36": "FA36 - RA-355-300-840",
+    "FA37": "FA37 - RA-355-300-840",
+    "FA38": "FA38 - RA-355-300-840",
+    "FA39": "FA39 - RA-324-300-84",
+    "FA40": "FA40 - RA-324-300-84",
+    "FA41": "FA41 - RA-324-300-84",
+    "FA42": "FA42 - RA-324-300-84",
+    "FA43": "FA43 - RA-324-300-84",
+    "FA44": "FA44 - RA-324-300-84",
+    "FA45": "FA45 - RA-324-300-84",
+    "FA46": "FA46 - RA-324-300-84",
+    "FA47": "FA47 - RA-324-300-84",
+    "FA48": "FA48 - RA-355-300-840",
+    "FA49": "FA49 - RA-355-300-840",
+    "FA50": "FA50 - RA-355-300-840",
+    "FA51": "FA51 - RA-390-300-84",
+    "FA52": "FA52 - RA-267-300-85",
+    "FA53": "FA53 - RA-267-300-85",
+    "FA54": "FA54 - RA-267-300-85",
+    "FA55": "FA55 - RA-267-300-85",
+    "FA56": "FA56 - RA-267-300-85",
+    "FA57": "FA57 - RA-324-300-870/T Rev",
+    "FA58": "FA58 - RA-324-300-870/T Rev",
+    "FA59": "FA59 - RA-324-300-870/T Rev",
+    "FA60": "FA60 - RA-324-300-870/T Rev",
+    "FA61": "FA61 - RA-324-300-870/T Rev",
+    "FA62": "FA62 - RA-324-300-870/T Rev",
+    "FA63": "FA63 - RA-324-300-870/T Rev",
+    "FA64": "FA64 - RA356-375-890",
+    "FA65": "FA65 - RA-365-300-84",
+    "FA66": "FA66 - RA-355-300-840",
+    "FA67": "FA67 - RA-355-300-840",
+    "FA68": "FA68 - ISO-229-300-890",
+    "FA69": "FA69 - ISO-229-300-890",
+    "FA70": "FA70 - ISO-229-300-890",
+    "FA71": "FA71 - ISO-229-300-890",
+    "FA72": "FA72 - ISO-229-300-890",
+    "FA73": "FA73 - ISO-229-300-890",
+    "FA74": "FA74 - ISO-229-300-890",
+    "FA75": "FA75 - ISO-229-300-890",
+    "FA76": "FA76 - ISO-229-300-890",
+    "FA77": "FA77 - ISO-229-300-890",
+    "FA78": "FA78 - RA 355-300-840",
+    "FA79": "FA79 - RA 390-300-840",
+    "FA80": "FA80 - RA 324-300-840",
+    "FA81": "FA81 - RA-324-300-870/T Rev",
+    "FA82": "FA82 - NGIS-244-300-890/B R",
+    "FA83": "FA83 - NGIS-244-300-890/B R",
+    "FA84": "FA84 - NGIS-244-300-890/B R",
+    "FA85": "FA85 - NGIS-244-300-890/B R",
+    "FA86": "FA86 - NGIS-244-300-890/B R",
+    "FA87": "FA87 - NGIS-244-300-890/B R",
+    "FA88": "FA88 - NGIS-244-300-890/B R",
+    "FA89": "FA89 - NGIS-244-300-890/B R",
+    "FA90": "FA90 - NGIS-244-300-890/B R",
+    "FA91": "FA91 - NGIS-244-300-890/B R",
+    "FA92": "FA92 - NGIS-324-300-890 REV",
+    "FA93": "FA93 - NGIS-324-300-890 REV",
+    "FA94": "FA94 - NGIS-324-300-890 REV",
+    "FA95": "FA95 - NGIS-324-300-890 REV",
+    "FA96": "FA96 - NGIS-324-300-890 REV",
+    "FA97": "FA97 - NGIS-324-300-890 REV",
+    "FA98": "FA98 - NGIS-324-300-890 REV",
+    "FA99": "FA99 - NGIS-324-300-890 REV",
+    "FB00": "FB00 - NGIS-324-300-890 REV",
+    "FB01": "FB01 - NGIS-324-300-890 REV",
+    "FB02": "FB02 - NGIS-324-300-890 REV",
+    "FB03": "FB03 - NGIS-324-300-890 REV",
+    "FB04": "FB04 - NGIS-324-300-890 REV",
+    "FB05": "FB05 - NGIS-324-300-890 REV",
+    "FB06": "FB06 - NGIS-324-300-890 REV",
+    "FB07": "FB07 - NGIS-324-300-890 REV",
+    "FB08": "FB08 - NGIS-324-300-890 REV",
+    "FB09": "FB09 - NGIS-324-300-890 REV",
+    "FB10": "FB10 - NGIS-267-300-890/B R",
+    "FB11": "FB11 - NGIS-267-300-890/B R",
+    "FB12": "FB12 - NGIS-267-300-890/B R",
+    "FB13": "FB13 - NGIS-267-300-890/B R",
+    "FB14": "FB14 - NGIS-267-300-890/B R",
+    "FB15": "FB15 - NGIS-267-300-890/B R",
+    "FB16": "FB16 - NGIS-267-300-890/B R",
+    "FB17": "FB17 - NGIS-267-300-890/B R",
+    "FB18": "FB18 - NGIS-267-300-890/B R",
+    "FB19": "FB19 - NGIS-267-300-890/B R",
+    "FB20": "FB20 - NGIS-267-300-890/B R",
+    "FB21": "FB21 - NGIS-267-300-890/B R",
+    "FB22": "FB22 - NGIS-267-300-890/B R",
+    "FB23": "FB23 - NGIS-267-300-890/B R",
+    "FB24": "FB24 - NGIS-267-300-890/B R",
+    "FB25": "FB25 - NGIS-267-300-890/B R",
+    "FB26": "FB26 - NGIS-267-300-890/B R",
+    "FB27": "FB27 - NGIS-267-300-890/B R",
+    "FB28": "FB28 - NGIS-356-300-890 REV",
+    "FB29": "FB29 - NGIS-356-300-890 REV",
+    "FB30": "FB30 - NGIS-356-300-890 REV",
+    "FB31": "FB31 - NGIS-356-300-890 REV",
+    "FB32": "FB32 - NGIS-356-300-890 REV",
+    "FB33": "FB33 - NGIS-356-300-890 REV",
+    "FB34": "FB34 - NGIS-356-300-890 REV",
+    "FB35": "FB35 - NGIS-356-300-890 REV",
+    "FB36": "FB36 - NGIS-356-300-890 REV",
+    "FB37": "FB37 - NGIS-356-300-890 REV",
+    "FB38": "FB38 - NGIS-390-300-300-890",
+    "FB39": "FB39 - NGIS-390-300-890 REV",
+    "FB40": "FB40 - NGIS-390-300-890 REV",
+    "FB41": "FB41 - NGIS-390-300-890 REV",
+    "FB42": "FB42 - NGIS-390-300-890 REV",
+    "FB43": "FB43 - NGIS-390-300-890 REV",
+    "FB44": "FB44 - NGIS-390-300-890 REV",
+    "FB45": "FB45 - NGIS-390-300-890- RE",
+    "FB46": "FB46 - NGIS-390-300-890 REV",
+    "FB47": "FB47 - NGIS-276-300-890",
+    "FB48": "FB48 - NGIS-276-300-890",
+    "FB49": "FB49 - NGIS-276-300-890",
+    "FB50": "FB50 - NGIS-276-300-890",
+    "FB51": "FB51 - NGIS-276-300-890",
+    "FB52": "FB52 - NGIS-276-300-890",
+    "FB53": "FB53 - NGIS-276-300-890",
+    "FB54": "FB54 - NGIS-276-300-890",
+    "FB55": "FB55 - NGIS-276-300-890",
+    "FB56": "FB56 - NGIS-276-300-890",
+    "FB57": "FB57 - NGIS-276-300-890",
+    "FB58": "FB58 - NGIS-276-300-890",
+    "FB59": "FB59 - RA-267-300-855/B Rev",
+    "FB60": "FB60 - RA-267-300-855/B Rev",
+    "FB61": "FB61 - RA-267-300-855/B Rev",
+    "FB62": "FB62 - RA-267-300-855/B Rev",
+    "FB63": "FB63 - RA-267-300-855/B Rev",
+    "FB64": "FB64 - RA-267-300-855/B Rev",
+    "FB65": "FB65 - RA-267-300-855/B Rev",
+    "FB66": "FB66 - RA-267-300-855/B Rev",
+    "FB67": "FB67 - RA-267-300-855/B Rev",
+    "FB68": "FB68 - IEA-356-300-990",
+    "FB69": "FB69 - IEA-356-300-990",
+    "FX00": "FX00 - CNG-2 325/200/39",
+    "FX01": "FX01 - CNG-2 325/200/45",
+    "FX02": "FX02 - CNG-2 325/200/53",
+    "FX03": "FX03 - CNG-2 325/200/61",
+    "FX04": "FX04 - CNG-2 325/200/65",
+    "FX05": "FX05 - CNG-2 325/200/70",
+    "FX06": "FX06 - CNG-2 325/200/81",
+    "FX07": "FX07 - CNG-2 325/200/90",
+    "FX08": "FX08 - CNG-2 325/200/100",
+    "FX09": "FX09 - 322/200/47",
+    "FX10": "FX10 - 322/200/50",
+    "FX11": "FX11 - 322/200/52,5",
+    "FX12": "FX12 - 322/200/55",
+    "FX13": "FX13 - 322/200/58",
+    "FX14": "FX14 - 322/200/60",
+    "FX15": "FX15 - 322/200/62",
+    "FX16": "FX16 - 322/200/65",
+    "FX17": "FX17 - 322/200/70",
+    "FX18": "FX18 - 322/200/75",
+    "FX19": "FX19 - 322/200/80",
+    "FX20": "FX20 - 322/200/85",
+    "FX21": "FX21 - 322/200/87,5",
+    "FX22": "FX22 - 322/200/90",
+    "FX23": "FX23 - 322/200/95",
+    "FX24": "FX24 - 322/200/100",
+    "FX25": "FX25 - 322/200/110",
+    "FX26": "FX26 - 322/200/120",
+    "FX27": "FX27 - 403/200/70",
+    "FX28": "FX28 - 403/200/75",
+    "FX29": "FX29 - 403/200/80",
+    "FX30": "FX30 - 403/200/85",
+    "FX31": "FX31 - 403/200/90",
+    "FX32": "FX32 - 403/200/95",
+    "FX33": "FX33 - 403/200/100",
+    "FX34": "FX34 - 403/200/110",
+    "FX35": "FX35 - 403/200/120",
+    "FX36": "FX36 - 403/200/125",
+    "FX37": "FX37 - 403/200/140",
+    "FX38": "FX38 - 340/200/44",
+    "FX39": "FX39 - 340/200/47",
+    "FX40": "FX40 - 340/200/50",
+    "FX41": "FX41 - 340/200/52",
+    "FX42": "FX42 - 340/200/54",
+    "FX43": "FX43 - 340/200/56",
+    "FX44": "FX44 - 340/200/58",
+    "FX45": "FX45 - 340/200/60",
+    "FX46": "FX46 - 340/200/65",
+    "FX47": "FX47 - 340/200/70",
+    "FX48": "FX48 - 340/200/72.5",
+    "FX49": "FX49 - 340/200/75",
+    "FX50": "FX50 - 340/200/80",
+    "FX51": "FX51 - 340/200/85",
+    "FX52": "FX52 - 340/200/90",
+    "FX53": "FX53 - 340/200/95",
+    "FX54": "FX54 - 340/200/100",
+    "FX55": "FX55 - 250/273/32,2",
+    "IF01": "IF01 - 355/250/65",
+    "IF02": "IF02 - 355/250/85",
+    "IF03": "IF03 - 355/250/90",
+    "IF04": "IF04 - 355/250/95",
+    "IF05": "IF05 - 244/200/32",
+    "IF06": "IF06 - 406/200/100",
+    "IF07": "IF07 - 406/200/110",
+    "IF08": "IF08 - 406/200/120",
+    "IF09": "IF09 - 323/200/125",
+    "IF10": "IF10 - 406/200/140",
+    "IF11": "IF11 - 406/200/150",
+    "IF12": "IF12 - 273/200/36",
+    "IF13": "IF13 - 273/200/40",
+    "IF14": "IF14 - 273/200/45",
+    "IF15": "IF15 - 273/200/50",
+    "IF16": "IF16 - 273/200/55",
+    "IF17": "IF17 - 273/200/60",
+    "IF18": "IF18 - 273/200/65",
+    "IF19": "IF19 - 273/200/70",
+    "IF20": "IF20 - 273/200/75",
+    "IF21": "IF21 - 273/200/80",
+    "IF22": "IF22 - 273/200/85",
+    "IF23": "IF23 - 273/200/90",
+    "IF24": "IF24 - 273/200/95",
+    "IF25": "IF25 - 273/200/100",
+    "IF26": "IF26 - 355/250/125",
+    "IF27": "IF27 - 273/200/30",
+    "IF28": "IF28 - 273/200/34",
+    "IF29": "IF29 - 232/200/19",
+    "IF30": "IF30 - 232/200/22",
+    "IF31": "IF31 - 232/200/28",
+    "IF32": "IF32 - 232/200/30",
+    "IF33": "IF33 - 232/200/34",
+    "IF34": "IF34 - 232/200/38",
+    "IF35": "IF35 - 232/200/40",
+    "IF36": "IF36 - 232/200/43",
+    "IF37": "IF37 - 232/200/50",
+    "IF38": "IF38 - 232/200/60",
+    "IF39": "IF39 - 244/200/40",
+    "IF40": "IF40 - 244/200/70",
+    "IF41": "IF41 - 244/200/80",
+    "IF42": "IF42 - 244/200/85",
+    "IF43": "IF43 - 244/200/95",
+    "IF44": "IF44 - 244/200/100",
+    "IF45": "IF45 - 244/200/105",
+    "IF46": "IF46 - 244/200/28",
+    "IF47": "IF47 - 44/340/200",
+    "IF48": "IF48 - 47/340/200",
+    "IF49": "IF49 - 50/340/200",
+    "IF50": "IF50 - 52/340/200",
+    "IF51": "IF51 - 54/340/200",
+    "IF52": "IF52 - 56/340/200",
+    "IF53": "IF53 - 58/340/200",
+    "IF54": "IF54 - 60/340/200",
+    "IF55": "IF55 - 65/340/200",
+    "IF56": "IF56 - 70/340/200",
+    "IF57": "IF57 - 72,5/340/200",
+    "IF58": "IF58 - 75/340/200",
+    "IF59": "IF59 - 80/340/200",
+    "IF60": "IF60 - 85/340/200",
+    "IF61": "IF61 - 90/340/200",
+    "IF62": "IF62 - 95/340/200",
+    "IF63": "IF63 - 1000/340/200",
+    "IF64": "IF64 - 75/323/200",
+    "IF65": "IF65 - 80/323/200",
+    "IF66": "IF66 - 90/323/200",
+    "IF67": "IF67 - 100/323/200",
+    "IF68": "IF68 - 120/323/200",
+    "IF69": "IF69 - 355/200/58",
+    "IF70": "IF70 - 355/200/60",
+    "IF71": "IF71 - 355/200/62.5",
+    "IF72": "IF72 - 355/200/65",
+    "IF73": "IF73 - 355/200/70",
+    "IF74": "IF74 - 355/200/75",
+    "IF75": "IF75 - 355/200/80",
+    "IF76": "IF76 - 355/200/85",
+    "IF77": "IF77 - 355/200/90",
+    "IF78": "IF78 - 355/200/100",
+    "IF79": "IF79 - 355/200/120",
+    "IF80": "IF80 - 204/200/12,9",
+    "IF81": "IF81 - 204/200/13,5",
+    "IF82": "IF82 - 204/200/14",
+    "IF83": "IF83 - 204/200/20",
+    "IF84": "IF84 - 204/200/21,5",
+    "IF85": "IF85 - 204/200/26",
+    "IF86": "IF86 - 204/200/26,5",
+    "IF87": "IF87 - 204/200/27",
+    "IF88": "IF88 - 204/200/28",
+    "IF89": "IF89 - 204/200/29",
+    "IF90": "IF90 - 204/200/30",
+    "IF91": "IF91 - 204/200/33",
+    "IF92": "IF92 - 204/200/36",
+    "IF93": "IF93 - 204/200/40",
+    "IF94": "IF94 - 204/200/45",
+    "IF95": "IF95 - 355/200/130",
+    "IF96": "IF96 - 355/200/140",
+    "IF97": "IF97 - 355/200/150",
+    "IF98": "IF98 - 323/200/40",
+    "IN00": "IN00 - 232/200/60",
+    "IN01": "IN01 - 244/200/34",
+    "IN02": "IN02 - 244/200/38",
+    "IN03": "IN03 - 244/200/50",
+    "IN04": "IN04 - 244/200/60",
+    "IN05": "IN05 - 273/200/1545",
+    "IN06": "IN06 - 273/200/928",
+    "IN07": "IN07 - 273/200/1645",
+    "IN08": "IN08 - 323/200/60",
+    "IN09": "IN09 - 323/200/65",
+    "IN10": "IN10 - 323/200/100",
+    "IN11": "IN11 - 400/200/980",
+    "IN12": "IN12 - 323/200/1750",
+    "IN13": "IN13 - 365/200",
+    "IN14": "IN14 - 365/200",
+    "IN15": "IN15 - 365/200",
+    "IN16": "IN16 - 365/200",
+    "IN17": "IN17 - 400/200",
+    "IN18": "IN18 - 400/200",
+    "IN19": "IN19 - 400/200",
+    "IN20": "IN20 - 400/200",
+    "IN21": "IN21 - 244/250 ESTAC",
+    "IN22": "IN22 - 244/250   EST",
+    "IN23": "IN23 - 244/200/30",
+    "IN24": "IN24 - 244/200/95 Doble Pico",
+    "IN25": "IN25 - 273/250 ESTAC",
+    "IN26": "IN26 - 323/200",
+    "IN27": "IN27 - 323/200/56",
+    "IN28": "IN28 - 323/250/100",
+    "IN29": "IN29 - 323/200",
+    "IN30": "IN30 - 219",
+    "IN31": "IN31 - 244",
+    "IN32": "IN32 - 323/200/75",
+    "IN33": "IN33 - 323/200",
+    "IN34": "IN34 - 244/200/950",
+    "IN35": "IN35 - 244/200/1110",
+    "IN36": "IN36 - 244/250 ESTAC",
+    "IN37": "IN37 - 323/200/58",
+    "IN38": "IN38 - 244/200/27",
+    "IN39": "IN39 - 244/200/40",
+    "IN40": "IN40 - 244/200/36",
+    "IN41": "IN41 - 355/250/80",
+    "IN42": "IN42 - 355/250/100",
+    "IN43": "IN43 - 355/250/120",
+    "IN44": "IN44 - 355/250/142",
+    "IN45": "IN45 - 235/200/20",
+    "IN46": "IN46 - 235/200/30",
+    "IN47": "IN47 - 235/200/40",
+    "IN48": "IN48 - 235/200/43.2",
+    "IN49": "IN49 - 235/200/49.1",
+    "IN50": "IN50 - 235/200/50",
+    "IN51": "IN51 - 323/200/47",
+    "IN52": "IN52 - 323/200/50",
+    "IN53": "IN53 - 323/200/80",
+    "IN54": "IN54 - 323/200/120",
+    "IN55": "IN55 - 355/200/58",
+    "IN56": "IN56 - 355/200/60",
+    "IN57": "IN57 - 355/200/65",
+    "IN58": "IN58 - 355/200/70",
+    "IN59": "IN59 - 355/200/75",
+    "IN60": "IN60 - 355/200/80",
+    "IN61": "IN61 - 355/200/85",
+    "IN62": "IN62 - 355/200/90",
+    "IN63": "IN63 - 355/200/100",
+    "IN64": "IN64 - 355/200/120",
+    "IN65": "IN65 - 244/200/34",
+    "IN66": "IN66 - 244/200/38",
+    "IN67": "IN67 - 244/200/50",
+    "IN68": "IN68 - 244/200/60",
+    "IN69": "IN69 - 244/200/30",
+    "IN70": "IN70 - 244/200/27",
+    "IN71": "IN71 - 355/250/105",
+    "IN72": "IN72 - 323/200/56",
+    "IN73": "IN73 - 323/200/44",
+    "IN74": "IN74 - 323/200/140",
+    "IN75": "IN75 - 355/250/65",
+    "IN76": "IN76 - 355/250/85",
+    "IN77": "IN77 - 355/250/90",
+    "IN78": "IN78 - 355/250/95",
+    "IN79": "IN79 - 355/250/105",
+    "IN80": "IN80 - 323/200/52",
+    "IN81": "IN81 - 355/200/62.5",
+    "IN82": "IN82 - 323/250/75",
+    "IN83": "IN83 - 323/250/90",
+    "IN84": "IN84 - 323/250/105",
+    "IN85": "IN85 - 323/250/110",
+    "IN86": "IN86 - 323/250/120",
+    "IN87": "IN87 - 323/250/130",
+    "IN88": "IN88 - 323/250/140",
+    "IN89": "IN89 - 323/250/150",
+    "IN90": "IN90 - 323/250/125",
+    "IN91": "IN91 - 273/200/50",
+    "IN92": "IN92 - 406/200/70",
+    "IN93": "IN93 - 406/200/80",
+    "IN94": "IN94 - 406/200/90",
+    "IN95": "IN95 - 406/200/95",
+    "IN96": "IN96 - 232/200",
+    "IN97": "IN97 - 232/200",
+    "IN98": "IN98 - 232/200",
+    "IN99": "IN99 - 232/200/50",
+    "IO01": "IO01 - 232/200/27-A",
+    "IO02": "IO02 - 232/200/30-A",
+    "IO03": "IO03 - 232/200/36-A",
+    "IO04": "IO04 - 232/200/28-A",
+    "IO05": "IO05 - 232/200/32-A",
+    "IO06": "IO06 - 232/200/34-A",
+    "IO07": "IO07 - 232/200/38-A",
+    "IO08": "IO08 - 232/200/40-A",
+    "IO09": "IO09 - 232/200/50-A",
+    "IO10": "IO10 - 232/200/60-A",
+    "IO11": "IO11 - 232/200/70-A",
+    "IO12": "IO12 - 244/200/55",
+    "IO13": "IO13 - NG36501T2/200/677",
+    "IO14": "IO14 - NG36501T2/200/625",
+    "IO15": "IO15 - NG36501T2/200/729",
+    "IO16": "IO16 - NG36501T2/200/782",
+    "IO17": "IO17 - NG36501T2/200/834",
+    "IO18": "IO18 - NG36501T2/200/886",
+    "IO19": "IO19 - NG36501T2/200/938",
+    "IO20": "IO20 - NG36501T2/200/990",
+    "KC00": "KC00 - 27.244.200",
+    "KC01": "KC01 - 30.244.200",
+    "KC02": "KC02 - 33.244.200",
+    "KC03": "KC03 - 37.244.200",
+    "KC04": "KC04 - 50.244.200",
+    "KC05": "KC05 - 60.244.200",
+    "KC06": "KC06 - 30.273.200",
+    "KC07": "KC07 - 38.273.200",
+    "KC08": "KC08 - 40.273.200",
+    "KC09": "KC09 - 45.273.200",
+    "KC10": "KC10 - 50.273.200",
+    "KC11": "KC11 - 60.273.200",
+    "KC12": "KC12 - 70.273.200",
+    "KC13": "KC13 - 80.273.200",
+    "KC14": "KC14 - 90.273.200",
+    "KC15": "KC15 - 40.280.200",
+    "KC16": "KC16 - 45.280.200",
+    "KC17": "KC17 - 49.280.200",
+    "KC18": "KC18 - 60.280.200",
+    "KC19": "KC19 - 80.280.200",
+    "KC20": "KC20 - 90.280.200",
+    "KC21": "KC21 - 24.232.200",
+    "KC22": "KC22 - 27.232.200",
+    "KC23": "KC23 - 30.232.200",
+    "KC24": "KC24 - 33.232.200",
+    "KC25": "KC25 - 37.232.200",
+    "KC26": "KC26 - 43.323.200",
+    "KC27": "KC27 - 50.323.200",
+    "KC28": "KC28 - 56.323.200",
+    "KC29": "KC29 - 58.323.200",
+    "KC30": "KC30 - 65.323.200",
+    "KC31": "KC31 - 200.50.340/6",
+    "KC32": "KC32 - 200.58.340/6",
+    "KC33": "KC33 - 200.60.340/6",
+    "KC34": "KC34 - 200.64.340/6",
+    "KC35": "KC35 - 200.69.340/6",
+    "KC36": "KC36 - 200.74.340/6",
+    "KH01": "KH01 - 200-35-244",
+    "KH02": "KH02 - 200-35-244",
+    "KH03": "KH03 - 244-35-244",
+    "KH04": "KH04 - 200-35-244",
+    "KH05": "KH05 - 200-50-244",
+    "KH06": "KH06 - 200-35-244",
+    "KH07": "KH07 - 200-35-244",
+    "KH08": "KH08 - 200-35-244",
+    "KH09": "KH09 - 200-35-244",
+    "KH10": "KH10 - 200.40.273/1",
+    "KH11": "KH11 - 200.40.273/1",
+    "KH12": "KH12 - 200.40.273/1",
+    "KH13": "KH13 - 200.40.273/1",
+    "KH14": "KH14 - 200.40.273/1",
+    "KH15": "KH15 - 200.30.244/3",
+    "KH16": "KH16 - 200.30.244/3",
+    "KH17": "KH17 - 200.30.244/3",
+    "KH18": "KH18 - 200.30.244/3",
+    "KH19": "KH19 - 200.45.244/3",
+    "KH20": "KH20 - 200.45.244/3",
+    "KH21": "KH21 - 200.45.244/3",
+    "KH22": "KH22 - 200.45.244/3",
+    "KH23": "KH23 - 200.45.244/3",
+    "KH24": "KH24 - 200.45.244/3",
+    "KH25": "KH25 - 200.26.232/4",
+    "KH26": "KH26 - 200.26.232/4",
+    "KH27": "KH27 - 200.26.232/4",
+    "KH28": "KH28 - 200.30.273/1",
+    "KH29": "KH29 - 200.30.273/1",
+    "KH30": "KH30 - 200.50.323/5",
+    "KH31": "KH31 - 200.50.323/5",
+    "KH32": "KH32 - 200.50.323/5",
+    "KH33": "KH33 - 200.50.323/5",
+    "KH34": "KH34 - 200.50.323/5",
+    "KH35": "KH35 - 200.50.340/6",
+    "KH36": "KH36 - 200.50.340/6",
+    "KH37": "KH37 - 200.50.340/6",
+    "KH38": "KH38 - 200.50.340/6",
+    "KH39": "KH39 - 200.50.340/6",
+    "KH40": "KH40 - 40.280.200/1",
+    "KH41": "KH41 - 45.280.200/1",
+    "KH42": "KH42 - 49.280.200/1",
+    "KH43": "KH43 - 60.280.200/1",
+    "KH44": "KH44 - 70.280.200/1",
+    "KH45": "KH45 - 80.280.200/1",
+    "KH46": "KH46 - 90.280.200/1",
+    "KH47": "KH47 - 55.280.200/1",
+    "KH48": "KH48 - 250.83.323",
+    "KH49": "KH49 - 250.90.323",
+    "KH50": "KH50 - 250.100.323",
+    "KH51": "KH51 - 250.110.323",
+    "KH52": "KH52 - 250.120.323",
+    "KH53": "KH53 - 200.20.232/10",
+    "KH54": "KH54 - 200.22.232/10",
+    "KH55": "KH55 - 200.24.232/10",
+    "KH56": "KH56 - 200.27.232/10",
+    "KH57": "KH57 - 200.40.280/4",
+    "KH58": "KH58 - 200.45.280/4",
+    "KH59": "KH59 - 200.49.280/4",
+    "KH60": "KH60 - 200.55.280/4",
+    "KH61": "KH61 - 200.60.280/4",
+    "KH62": "KH62 - 200.70.280/4",
+    "KH63": "KH63 - 200.80.280/4",
+    "KH64": "KH64 - 200.90.280/4",
+    "KH65": "KH65 - 200.6.168/9",
+    "KH66": "KH66 - 200.8.168/9",
+    "KH67": "KH67 - 200.10.168/9",
+    "KH68": "KH68 - 200.16.168/9",
+    "KH69": "KH69 - 200.18.168/9",
+    "KH70": "KH70 - 200.21.168/9",
+    "KH71": "KH71 - 200.40.273/4",
+    "KH72": "KH72 - 200.45.273/4",
+    "KH73": "KH73 - 200.49.273/4",
+    "KH74": "KH74 - 200.55.273/4",
+    "KH75": "KH75 - 200.60.273/4",
+    "KH76": "KH76 - 200.70.273/4",
+    "KH77": "KH77 - 200.80.273/4",
+    "KH78": "KH78 - 200.90.273/4",
+    "KH79": "KH79 - 70.323.200",
+    "KH80": "KH80 - 80.323.200",
+    "KH81": "KH81 - 90.323.200",
+    "KH82": "KH82 - 100.323.200",
+    "KH83": "KH83 - 200.90.340/6",
+    "KH84": "KH84 - 200.100.340/6",
+    "KH85": "KH85 - 200.110.340/6",
+    "KH86": "KH86 - 200.120.340/6",
+    "KH87": "KH87 - 200.33.232/10",
+    "KH88": "KH88 - 200.48.232/10",
+    "KH89": "KH89 - 200.58.232/10",
+    "KH90": "KH90 - 200.32.273/4",
+    "KI01": "KI01 - 250.81.323/8",
+    "KI02": "KI02 - 250.85.323/8",
+    "KI10": "KI10 - 200.30.273/4",
+    "KI11": "KI11 - 200.36.273/4",
+    "KI12": "KI12 - 250.80.355/15",
+    "KI13": "KI13 - 250.90.355/15",
+    "KI14": "KI14 - 250.105.355/15",
+    "KI15": "KI15 - 250.125.355/15",
+    "KI16": "KI16 - 250.140.355/15",
+    "KI17": "KI17 - 250.150.355/15",
+    "KI18": "KI18 - 250.160.355/15",
+    "KI19": "KI19 - 200.58.355/8",
+    "KI20": "KI20 - 200.64.355/8",
+    "KI21": "KI21 - 200.70.355/8",
+    "KI22": "KI22 - 200.75.355/8",
+    "KI23": "KI23 - 200.80.355/8",
+    "KI24": "KI24 - 200.90.355/8",
+    "KI25": "KI25 - 200.100.355/8",
+    "KI26": "KI26 - 200.120.355/8",
+    "KI27": "KI27 - 200.30.244/2",
+    "KI28": "KI28 - 200.33.244/2",
+    "KI29": "KI29 - 200.37.244/2",
+    "KI30": "KI30 - 200.50.244/2",
+    "KI31": "KI31 - 200.60.244/2",
+    "KI32": "KI32 - 200.80.340/6",
+    "KI33": "KI33 - 200.44.340/6",
+    "KI34": "KI34 - 200.30.280/4",
+    "KI35": "KI35 - 200.35.280/4",
+    "KI36": "KI36 - 200.26.244/2",
+    "KI37": "KI37 - 200.55.244/2",
+    "KI38": "KI38 - 200.85.406/19",
+    "KI39": "KI39 - 200.90.406/19",
+    "KI40": "KI40 - 200.95.406/19",
+    "KI41": "KI41 - 200.100.406/19",
+    "KI42": "KI42 - 200.110.406/19",
+    "KI43": "KI43 - 200.120.406/19",
+    "KI44": "KI44 - 200.130.406/19",
+    "KI45": "KI45 - 200.140.406/19",
+    "KI46": "KI46 - 200.150.406/19",
+    "KI47": "KI47 - 200.50.355/8",
+    "KI48": "KI48 - 200.110.355/8",
+    "KI49": "KI49 - 200.44.355/8",
+    "KI50": "KI50 - 200.130.355/8",
+    "KI51": "KI51 - 200.140.355/8",
+    "KI52": "KI52 - 200.150.355/8",
+    "KI53": "KI53 - 200.30.273/2",
+    "KI54": "KI54 - 200.36.273/2",
+    "KI55": "KI55 - 200.40.273/2",
+    "KI56": "KI56 - 200.45.273/2",
+    "KI57": "KI57 - 200.49.273/2",
+    "KI58": "KI58 - 200.55.273/2",
+    "KI59": "KI59 - 200.60.273/2",
+    "KI60": "KI60 - 200.70.273/2",
+    "KI61": "KI61 - 200.80.273/02",
+    "KI62": "KI62 - 200.90.273/2",
+    "KI63": "KI63 - 200.44.340/6",
+    "KI64": "KI64 - 200.50.340/6",
+    "KI65": "KI65 - 200.58.340/6",
+    "KI66": "KI66 - 200.60.340/6",
+    "KI67": "KI67 - 200.64.340/6",
+    "KI68": "KI68 - 200.69.340/6",
+    "KI69": "KI69 - 200.74.340/6",
+    "KI70": "KI70 - 200.80.340/6",
+    "KI71": "KI71 - 200.90.340/6",
+    "KI72": "KI72 - 200.100.340/6",
+    "KI73": "KI73 - 200.110.340/6",
+    "KI74": "KI74 - 200.120.340/6",
+    "KI75": "KI75 - 200.30.273/2",
+    "KI76": "KI76 - 200.36.273/2",
+    "KI77": "KI77 - 200.40.273/2",
+    "KI78": "KI78 - 200.45.273/2",
+    "KI79": "KI79 - 200.49.273/2",
+    "KI80": "KI80 - 200.55.273/2",
+    "KI81": "KI81 - 200.60.273/2",
+    "KI82": "KI82 - 200.70.273/2",
+    "KI83": "KI83 - 200.80.273/2",
+    "KI84": "KI84 - 200.90.273/2",
+    "KI85": "KI85 - 200.44.340/22",
+    "KI86": "KI86 - 200.50.340/22",
+    "KI87": "KI87 - 200.58.340/22",
+    "KI88": "KI88 - 200.60.340/22",
+    "KI89": "KI89 - 200.64.340/22",
+    "KI90": "KI90 - 200.69.340/22",
+    "KI91": "KI91 - 200.74.340/22",
+    "KI92": "KI92 - 200.80.340/22",
+    "KI93": "KI93 - 200.90.340/22",
+    "KI94": "KI94 - 200.100.340/22",
+    "KI95": "KI95 - 200.110.340/22",
+    "KI96": "KI96 - 200.120.340/22",
+    "KI97": "KI97 - 200.20.232/13",
+    "KI98": "KI98 - 200.24.232/13",
+    "KI99": "KI99 - 200.28.232/13",
+    "KJ01": "KJ01 - 200.32.232/13",
+    "KJ02": "KJ02 - 200.46.232/13",
+    "KJ03": "KJ03 - 200.55.232/13",
+    "KJ04": "KJ04 - 200.43.323/5",
+    "KJ05": "KJ05 - 200.50.323/5",
+    "KJ06": "KJ06 - 200.56.323/5",
+    "KJ07": "KJ07 - 200.58.323/5",
+    "KJ08": "KJ08 - 200.65.323/5",
+    "KJ09": "KJ09 - 200.70.323/5",
+    "KJ10": "KJ10 - 200.80.323/5",
+    "KJ11": "KJ11 - 200.90.323/5",
+    "KJ12": "KJ12 - 200.100.323/5",
+    "KJ13": "KJ13 - 200.120.323/5",
+    "KJ14": "KJ14 - 200.58.355/23",
+    "KJ15": "KJ15 - 200.64.355/23",
+    "KJ16": "KJ16 - 200.70.355/23",
+    "KJ17": "KJ17 - 200.75.355/23",
+    "KJ18": "KJ18 - 200.80.355/23",
+    "KJ19": "KJ19 - 200.90.355/23",
+    "KJ20": "KJ20 - 200.100.355/23",
+    "KJ21": "KJ21 - 200.110.355/23",
+    "KJ22": "KJ22 - 200.120.355/23",
+    "KJ23": "KJ23 - 200.130.355/23",
+    "KJ24": "KJ24 - 200.140.355/23",
+    "KJ25": "KJ25 - 200.43.323/24",
+    "KJ26": "KJ26 - 200.50.323/24",
+    "KJ27": "KJ27 - 200.56.323/24",
+    "KJ28": "KJ28 - 200.58.323/24",
+    "KJ29": "KJ29 - 200.65.323/24",
+    "KJ30": "KJ30 - 200.70.323/24",
+    "KJ31": "KJ31 - 200.80.323/24",
+    "KJ32": "KJ32 - 200.90.323/24",
+    "KJ33": "KJ33 - 200.100.323/24",
+    "KJ34": "KJ34 - 250.125.323/8",
+    "KJ35": "KJ35 - 200.42.299/26",
+    "KJ36": "KJ36 - 200.46.299/26",
+    "KJ37": "KJ37 - 200.50.299/26",
+    "KJ38": "KJ38 - 200.55.299/26",
+    "KJ39": "KJ39 - 200.60.299/26",
+    "KJ40": "KJ40 - 200.65.299/26",
+    "KJ41": "KJ41 - 200.70.299/26",
+    "KJ42": "KJ42 - 200.80.299/26",
+    "KJ43": "KJ43 - 200.90.299/26",
+    "KJ44": "KJ44 - 200.100.299/26",
+    "KJ45": "KJ45 - 200.110.457/27",
+    "KJ46": "KJ46 - 200.115.457/27",
+    "KJ47": "KJ47 - 200.120.457/27",
+    "KJ48": "KJ48 - 200.125.457/27",
+    "KJ49": "KJ49 - 200.130.457/27",
+    "KJ50": "KJ50 - 200.135.457/27",
+    "KJ51": "KJ51 - 200.140.457/27",
+    "KJ52": "KJ52 - 200.145.457/27",
+    "KJ53": "KJ53 - 200.150.457/27",
+    "KJ54": "KJ54 - 200.55.370 28",
+    "KJ55": "KJ55 - 200.58.370 28",
+    "KJ56": "KJ56 - 200.60.370 28",
+    "KJ57": "KJ57 - 200.65.370 28",
+    "KJ58": "KJ58 - 200.70.370 28",
+    "KJ59": "KJ59 - 200.75.370 28",
+    "KJ60": "KJ60 - 200.80.370 28",
+    "KJ61": "KJ61 - 200.85.370 28",
+    "KJ62": "KJ62 - 200.90.370 28",
+    "KJ63": "KJ63 - 200.95.370 28",
+    "KJ64": "KJ64 - 200.100.370 28",
+    "KJ65": "KJ65 - 200.110.370 28",
+    "KJ66": "KJ66 - 200.120.370 28",
+    "KJ67": "KJ67 - 200.125.370 28",
+    "KJ68": "KJ68 - 200.20.232/31",
+    "KJ69": "KJ69 - 200.24.232/31",
+    "KJ70": "KJ70 - 200.28.232/31",
+    "KJ71": "KJ71 - 200.32.232/31",
+    "KJ72": "KJ72 - 200.46.232/31",
+    "KJ73": "KJ73 - 200.55.232/31",
+    "KJ74": "KJ74 - 200.42.299/30",
+    "KJ75": "KJ75 - 200.46.299/30",
+    "KJ76": "KJ76 - 200.50.299/30",
+    "KJ77": "KJ77 - 200.55.299/30",
+    "KJ78": "KJ78 - 200.60.299/30",
+    "KJ79": "KJ79 - 200.65.299/30",
+    "KJ80": "KJ80 - 200.70.299/30",
+    "KJ81": "KJ81 - 200.80.299/30",
+    "KJ82": "KJ82 - 200.90.299./30",
+    "KJ83": "KJ83 - 200.100.299/30",
+    "KJ84": "KJ84 - 200.43.323/32",
+    "KJ85": "KJ85 - 200.50.323/32",
+    "KJ86": "KJ86 - 200.56.323/32",
+    "KJ87": "KJ87 - 200.58.323/32",
+    "KJ88": "KJ88 - 200.65.323/32",
+    "KJ89": "KJ89 - 200.70.323/32",
+    "KJ90": "KJ90 - 200.80.323/32",
+    "KJ91": "KJ91 - 200.90.323/32",
+    "KJ92": "KJ92 - 200.100.323/32",
+    "KJ93": "KJ93 - 200.120.323/32",
+    "KJ94": "KJ94 - 200.43.316/37",
+    "KJ95": "KJ95 - 200.50.316/37",
+    "KJ96": "KJ96 - 200.56.316/37",
+    "KJ97": "KJ97 - 200.58.316/37",
+    "KJ98": "KJ98 - 200.65.299/26",
+    "KJ99": "KJ99 - 200.65.316/37",
+    "KK01": "KK01 - 200.70.316/37",
+    "KK02": "KK02 - 200.80.316/37",
+    "KK03": "KK03 - 200.90.316/37",
+    "KK04": "KK04 - 200.100.316/37",
+    "KK05": "KK05 - 200.120.316/37",
+    "KK06": "KK06 - 200.43.324/40",
+    "KK07": "KK07 - 200.50.324/40",
+    "KK08": "KK08 - 200.56.324/40",
+    "KK09": "KK09 - 200.58.324/40",
+    "KK10": "KK10 - 200.65.324/40",
+    "KK11": "KK11 - 200.70.324/40",
+    "KK12": "KK12 - 200.80.324/40",
+    "KK13": "KK13 - 200.90.324/40",
+    "KK14": "KK14 - 200.100.324/40",
+    "KK16": "KK16 - 200.20.232/46",
+    "KK17": "KK17 - 200.24.232/46",
+    "KK18": "KK18 - 200.28.232/46",
+    "KK19": "KK19 - 200.32.232/46",
+    "KK20": "KK20 - 200.40.232/46",
+    "KK21": "KK21 - 200.46.232/46",
+    "KK22": "KK22 - 200.55.232/46",
+    "KK23": "KK23 - 200.30.273/48",
+    "KK24": "KK24 - 200.35.273/48",
+    "KK25": "KK25 - 200.40.273/48",
+    "KK26": "KK26 - 200.45.273/48",
+    "KK27": "KK27 - 200.49.273/48",
+    "KK28": "KK28 - 200.55.273/48",
+    "KK29": "KK29 - 200.60.273/48",
+    "KK30": "KK30 - 200.70.273/48",
+    "KK31": "KK31 - 200.80.273/48",
+    "KK32": "KK32 - 200.90.273/48",
+    "KK33": "KK33 - 200.78.370/28",
+    "KK34": "KK34 - 200.150.370/28",
+    "KK39": "KK39 - 200.50.340/17",
+    "KK40": "KK40 - 200.50.340/47",
+    "KK41": "KK41 - 200.58.340/47",
+    "KK42": "KK42 - 200.60.340/47",
+    "KK43": "KK43 - 200.64.340/47",
+    "KK44": "KK44 - 200.70.340/47",
+    "KK45": "KK45 - 200.74.340/47",
+    "KK46": "KK46 - 200.80.340/47",
+    "KK47": "KK47 - 200.90.340/47",
+    "KK48": "KK48 - 200.100.340/47",
+    "KK49": "KK49 - 200.110.340/47",
+    "KK50": "KK50 - 200.120.340/47",
+    "KK54": "KK54 - 200.58.356/54",
+    "KK55": "KK55 - 200.64.356/54",
+    "KK56": "KK56 - 200.70.356/54",
+    "KK57": "KK57 - 200.75.356/54",
+    "KK58": "KK58 - 200.80.356/54",
+    "KK59": "KK59 - 200.90.356/54",
+    "KK60": "KK60 - 200.100.356/54",
+    "KK61": "KK61 - 200.110.356/54",
+    "KK62": "KK62 - 200.120.356/54",
+    "KK63": "KK63 - 200.130.356/54",
+    "KK64": "KK64 - 200.140.356/54",
+    "KK65": "KK65 - 200.26.244/53",
+    "KK66": "KK66 - 200.30.244/53",
+    "KK67": "KK67 - 200.33.244/53",
+    "KK68": "KK68 - 200.37.244/53",
+    "KK69": "KK69 - 200.50.244/53",
+    "KK70": "KK70 - 200.55.244/53",
+    "KK71": "KK71 - 200.60.244/53",
+    "KK72": "KK72 - 200.50.323/44",
+    "KK73": "KK73 - 200.56.323/44",
+    "KK74": "KK74 - 200.58.323/44",
+    "KK75": "KK75 - 200.60.323/44",
+    "KK76": "KK76 - 200.65.323/44",
+    "KK77": "KK77 - 200.70.323/44",
+    "KK78": "KK78 - 200.80.323/44",
+    "KK79": "KK79 - 200.90.323/44",
+    "KK80": "KK80 - 200.100.323/44",
+    "KK81": "KK81 - 200.43.316/56",
+    "KK82": "KK82 - 200.50.316/56",
+    "KK83": "KK83 - 200.56.316/56",
+    "KK84": "KK84 - 200.58.316/56",
+    "KK85": "KK85 - 200.65.316/56",
+    "KK86": "KK86 - 200.70.316/56",
+    "KK87": "KK87 - 200.80.316/56",
+    "KK88": "KK88 - 200.90.316/56",
+    "KK89": "KK89 - 200.100.316/56",
+    "KK90": "KK90 - 200.120.316/56",
+    "KK91": "KK91 - 200.30.273/49",
+    "KK92": "KK92 - 200.40.273/49",
+    "KK93": "KK93 - 200.45.273/49",
+    "KK94": "KK94 - 200.50.273/49",
+    "KK95": "KK95 - 200.55.273/49",
+    "KK96": "KK96 - 200.60.273/49",
+    "KK97": "KK97 - 200.70.273/49",
+    "KK98": "KK98 - 200.80.273/49",
+    "KK99": "KK99 - 200.90.273/49",
+    "KL02": "KL02 - 200.50.324/51",
+    "KL03": "KL03 - 200.56.324/51",
+    "KL04": "KL04 - 200.58.324/51",
+    "KL05": "KL05 - 200.60.324/51",
+    "KL06": "KL06 - 200.65.324/51",
+    "KL07": "KL07 - 200.70.324/51",
+    "KL08": "KL08 - 200.80.324/51",
+    "KL09": "KL09 - 200.90.324/51",
+    "KL10": "KL10 - 200.100.324/51",
+    "KL11": "KL11 - 300.60.273/12",
+    "KL12": "KL12 - 300.70.273/12",
+    "KL13": "KL13 - 300.80.273/12",
+    "KL14": "KL14 - 300.90.273/12",
+    "KL15": "KL15 - 300.97.273/12",
+    "KL16": "KL16 - 200.58.356/59",
+    "KL17": "KL17 - 200.64.356/59",
+    "KL18": "KL18 - 200.70.356/59",
+    "KL19": "KL19 - 200.75.356/59",
+    "KL20": "KL20 - 200.80.356/59",
+    "KL21": "KL21 - 200.90.356/59",
+    "KL22": "KL22 - 200.100.356/59",
+    "KL23": "KL23 - 200.110.356/59",
+    "KL24": "KL24 - 200.120.356/59",
+    "KL25": "KL25 - 200.130.356/59",
+    "KL26": "KL26 - 200.140.356/59",
+    "KL27": "KL27 - 200.20.232/33",
+    "KL28": "KL28 - 200.22.232/33",
+    "KL29": "KL29 - 200.24.232/33",
+    "KL30": "KL30 - 200.26.232/33",
+    "KL31": "KL31 - 200.28.232/33",
+    "KL32": "KL32 - 200.30.232/33",
+    "KL33": "KL33 - 200.32.232/33",
+    "KL34": "KL34 - 200.34.232/33",
+    "KL35": "KL35 - 200.35.232/33",
+    "KL36": "KL36 - 200.36.232/33",
+    "KL37": "KL37 - 200.38.232/33",
+    "KL38": "KL38 - 200.40.232/33",
+    "KL39": "KL39 - 200.42.232/33",
+    "KL40": "KL40 - 200.44.232/33",
+    "KL41": "KL41 - 200.46.232/33",
+    "KL42": "KL42 - 200.48.232/33",
+    "KL43": "KL43 - 200.50.232/33",
+    "KL44": "KL44 - 200.52.232/33",
+    "KL45": "KL45 - 200.54.232/33",
+    "KL46": "KL46 - 250.130.323 /8",
+    "KL47": "KL47 - 200.50.340/71",
+    "KL48": "KL48 - 200.56.340/71",
+    "KL49": "KL49 - 200.60.340/71",
+    "KL50": "KL50 - 200.64.340/71",
+    "KL51": "KL51 - 200.70.340/71",
+    "KL52": "KL52 - 200.74.340/71",
+    "KL53": "KL53 - 200.80.340/71",
+    "KL54": "KL54 - 200.90.340/71",
+    "KL55": "KL55 - 200.100.340/71",
+    "KL56": "KL56 - 200.110.340/71",
+    "KL57": "KL57 - 200.120.340/71",
+    "KL58": "KL58 - 200.58.340/71",
+    "KL59": "KL59 - 200.26.244/72",
+    "KL60": "KL60 - 200.30.244/72",
+    "KL61": "KL61 - 200.33.244/72",
+    "KL62": "KL62 - 200.37.244/72",
+    "KL63": "KL63 - 200.50.244/72",
+    "KL64": "KL64 - 200.55.244/72",
+    "KL65": "KL65 - 200.60.244/72",
+    "KL67": "KL67 - 200.50.34073",
+    "KL68": "KL68 - 200.58.34073",
+    "KL69": "KL69 - 200.60.34073",
+    "KL70": "KL70 - 200.64.34073",
+    "KL71": "KL71 - 200.70.34073",
+    "KL72": "KL72 - 200.74.34073",
+    "KL73": "KL73 - 200.80.34073",
+    "KL74": "KL74 - 200.90.34073",
+    "KL75": "KL75 - 200.100.34073",
+    "KL76": "KL76 - 200.110.34073",
+    "KL77": "KL77 - 200.120.34073",
+    "KL78": "KL78 - 200.130.34073",
+    "KL79": "KL79 - 200.140.34073",
+    "KL80": "KL80 - 200.150.34073",
+    "KL83": "KL83 - 200.85.40674",
+    "KL84": "KL84 - 200.90.40674",
+    "KL85": "KL85 - 200.95.40674",
+    "KL86": "KL86 - 200.100.40674",
+    "KL87": "KL87 - 200.110.40674",
+    "KL88": "KL88 - 200.120.40674",
+    "KL89": "KL89 - 200.130.40674",
+    "KL90": "KL90 - 200.140.40674",
+    "KL91": "KL91 - 200.150.40674",
+    "KO01": "KO01 - 250.60.273/1",
+    "KO02": "KO02 - 250.70.273/1",
+    "KO03": "KO03 - 250.80.273/1",
+    "KO04": "KO04 - 250.90.273/1",
+    "KO05": "KO05 - 250.97.273/1",
+    "KO06": "KO06 - 200.50.340/66.",
+    "KO07": "KO07 - 200.58.340/66.",
+    "KO08": "KO08 - 200.60.340/66.",
+    "KO09": "KO09 - 200.64.340/66.",
+    "KO10": "KO10 - 200.70.340/66.",
+    "KO11": "KO11 - 200.74.340/66.",
+    "KO12": "KO12 - 200.80.340/66.",
+    "KO13": "KO13 - 200.90.340/66.",
+    "KO14": "KO14 - 200.100.340/66.",
+    "KO15": "KO15 - 200.110.340/66.",
+    "KO16": "KO16 - 200.120.340/66.",
+    "MA01": "MA01 - 324",
+    "MA02": "MA02 - 324",
+    "MA03": "MA03 - 324",
+    "MA04": "MA04 - 324",
+    "MA05": "MA05 - 324",
+    "MA06": "MA06 - 324",
+    "MA07": "MA07 - 324",
+    "MA08": "MA08 - 340",
+    "MA09": "MA09 - 340",
+    "MA10": "MA10 - 340",
+    "MA11": "MA11 - 340",
+    "MA12": "MA12 - 244",
+    "MA13": "MA13 - 244",
+    "MA14": "MA14 - 244",
+    "MA15": "MA15 - 244",
+    "MA16": "MA16 - 244",
+    "MA17": "MA17 - 244",
+    "MA18": "MA18 - 244",
+    "MA19": "MA19 - 244",
+    "MA20": "MA20 - 235",
+    "MA21": "MA21 - 235",
+    "MA22": "MA22 - 235",
+    "MA23": "MA23 - 235",
+    "MA24": "MA24 - 235",
+    "MA25": "MA25 - 36-980-235",
+    "MA26": "MA26 - 7,5-488-165",
+    "MA27": "MA27 - 71-900-353",
+    "MA28": "MA28 - 100-1230-353",
+    "MA29": "MA29 - 40-870-273",
+    "MA30": "MA30 - 33-920-235",
+    "MA31": "MA31 - 50324",
+    "MI01": "MI01 - CNG CILINDER 58 LTS DIAM",
+    "MQ01": "MQ01 - 027BIX200X",
+    "MQ02": "MQ02 - 040OIX200X",
+    "MQ03": "MQ03 - 057KIX200X",
+    "MQ04": "MQ04 - 060KIX200X",
+    "MQ05": "MQ05 - 065YIX200X",
+    "MQ06": "MQ06 - 1251WX250X",
+    "MQ07": "MQ07 - 1501WX250X",
+    "MQ08": "MQ08 - 027BXB200A",
+    "MQ09": "MQ09 - 030BXB200A",
+    "MQ10": "MQ10 - 030QXB200A",
+    "MQ11": "MQ11 - 040OXB200A",
+    "MQ12": "MQ12 - 057KXB200A",
+    "MQ13": "MQ13 - 060KXB200A",
+    "MQ14": "MQ14 - 065YXB200A",
+    "MQ15": "MQ15 - 130YXB200A",
+    "MQ16": "MQ16 - 080KXB200A",
+    "MQ17": "MQ17 - 100KXB200A",
+    "MQ18": "MQ18 - 120KXB200A",
+    "MQ19": "MQ19 - 0304XB200A",
+    "MQ20": "MQ20 - 057CXB200A",
+    "MQ21": "MQ21 - 100CXB200A",
+    "MQ22": "MQ22 - 065DXB200A",
+    "MT01": "MT01 - 50 324",
+    "MT02": "MT02 - 60 324",
+    "MT03": "MT03 - 65 324",
+    "MT04": "MT04 - 30 235",
+    "MT05": "MT05 - 34 235",
+    "MT06": "MT06 - 38 235",
+    "MT07": "MT07 - 40 273",
+    "PA01": "PA01 - 244/200/34",
+    "PA02": "PA02 - 244/200/38",
+    "PA03": "PA03 - 244/200/50",
+    "PA04": "PA04 - 244/200/60",
+    "PA05": "PA05 - 244/200/30",
+    "PA06": "PA06 - 244/200/40",
+    "PA07": "PA07 - 323/200/55",
+    "PA08": "PA08 - 323/200/60",
+    "PA09": "PA09 - 323/200/65",
+    "PA10": "PA10 - 323/200/100",
+    "PA11": "PA11 - 244/200/28",
+    "PA12": "PA12 - 168/200/7",
+    "PA13": "PA13 - 168/200/15",
+    "PA14": "PA14 - 30-273-200",
+    "PA15": "PA15 - 35-273-200",
+    "PA16": "PA16 - 40-273-200",
+    "PA17": "PA17 - 45-273-200",
+    "PA18": "PA18 - 50-273-200",
+    "PA19": "PA19 - 60-273-200",
+    "PA20": "PA20 - PA03",
+    "PA21": "PA21 - 40/273/200",
+    "PA22": "PA22 - 30/273/200",
+    "PA23": "PA23 - 35/273/200",
+    "PA24": "PA24 - 45/273/200",
+    "PA25": "PA25 - 50/273/200",
+    "PA26": "PA26 - 60/273/200",
+    "PI01": "PI01 - 244",
+    "PI02": "PI02 - 244",
+    "PI03": "PI03 - 244",
+    "PI04": "PI04 - 244",
+    "PI05": "PI05 - 244/250 ESTAC",
+    "PI06": "PI06 - 244",
+    "PI07": "PI07 - 244/250 ESTAC",
+    "PI08": "PI08 - 323",
+    "PI09": "PI09 - 323",
+    "PI10": "PI10 - 323",
+    "PI11": "PI11 - 323",
+    "PI12": "PI12 - 323",
+    "PI13": "PI13 - 323",
+    "PI14": "PI14 - 323/250 ESTAC",
+    "PI15": "PI15 - 244",
+    "SA02": "SA02 - 244",
+    "SA03": "SA03 - 244",
+    "SA04": "SA04 - 244",
+    "SA05": "SA05 - 244",
+    "SA06": "SA06 - 244",
+    "SA07": "SA07 - 244",
+    "SA08": "SA08 - 244/250 ESTAC",
+    "SA09": "SA09 - 244/250 ESTAC",
+    "SA10": "SA10 - 244",
+    "SA11": "SA11 - 244",
+    "SA12": "SA12 - 244",
+    "SA13": "SA13 - 244",
+    "SA14": "SA14 - 244",
+    "SA15": "SA15 - 244",
+    "SA16": "SA16 - 244/250 ESTAC",
+    "SI01": "SI01 - 244",
+    "SI02": "SI02 - 244",
+    "SI03": "SI03 - 244",
+    "SI04": "SI04 - 244",
+    "SI05": "SI05 - 323",
+    "SI06": "SI06 - 323",
+    "SI07": "SI07 - 323",
+    "SI08": "SI08 - 323",
+    "SI09": "SI09 - 323",
+    "SI10": "SI10 - 323-250  ESTA",
+    "SI11": "SI11 - 323-250  ESTA",
+    "SI12": "SI12 - 244",
+    "SI13": "SI13 - 323",
+    "SI14": "SI14 - 323",
+    "TJ01": "TJ01 - 232-TJ-21",
+    "TJ02": "TJ02 - 232-TJ-23",
+    "TJ03": "TJ03 - 232-TJ-25",
+    "TJ04": "TJ04 - 232-TJ-28",
+    "TJ05": "TJ05 - 232-TJ-30",
+    "TJ06": "TJ06 - 232-TJ-32",
+    "TJ07": "TJ07 - 232-TJ-33",
+    "TJ08": "TJ08 - 232-TJ-35",
+    "TJ09": "TJ09 - 232-TJ-38",
+    "TJ10": "TJ10 - 232-TJ-39",
+    "TJ11": "TJ11 - 232-TJ-40",
+    "TJ12": "TJ12 - 232-TJ-45",
+    "TJ13": "TJ13 - 232-TJ-50",
+    "TJ14": "TJ14 - 232-TJ-55",
+    "TJ15": "TJ15 - 323-TJ-43",
+    "TJ16": "TJ16 - 323-TJ-47",
+    "TJ17": "TJ17 - 323-TJ-50",
+    "TJ18": "TJ18 - 323-TJ-54",
+    "TJ19": "TJ19 - 323-TJ-58",
+    "TJ20": "TJ20 - 323-TJ-60",
+    "TJ21": "TJ21 - 323-TJ-62",
+    "TJ22": "TJ22 - 323-TJ-65",
+    "TJ23": "TJ23 - 323-TJ-75",
+    "TJ24": "TJ24 - 323-TJ-80",
+    "TJ25": "TJ25 - 323-TJ-90",
+    "TJ26": "TJ26 - 323-TJ-100",
+    "TJ27": "TJ27 - 323-TJ-120",
+    "TJ28": "TJ28 - 355,6-TJ-58",
+    "TJ29": "TJ29 - 355,6-TJ-60",
+    "TJ30": "TJ30 - 355,6-TJ-63",
+    "TJ31": "TJ31 - 355,6-TJ-65",
+    "TJ32": "TJ32 - 355,6-TJ-70",
+    "TJ33": "TJ33 - 355,6-TJ-75",
+    "TJ34": "TJ34 - 355,6-TJ-80",
+    "TJ35": "TJ35 - 355,6-TJ-90",
+    "TJ36": "TJ36 - 355,6-TJ-100",
+    "TJ37": "TJ37 - 355,6-TJ-120",
+    "TJ38": "TJ38 - 273-TJ-30",
+    "TJ39": "TJ39 - 273-TJ-35",
+    "TJ40": "TJ40 - 273-TJ-38",
+    "TJ41": "TJ41 - 273-TJ-40",
+    "TJ42": "TJ42 - 273-TJ-45",
+    "TJ43": "TJ43 - 273-TJ-50",
+    "TJ44": "TJ44 - 273-TJ-60",
+    "TJ45": "TJ45 - 323-TJI-43",
+    "TJ46": "TJ46 - 323-TJI-47",
+    "TJ47": "TJ47 - 323-TJI-50",
+    "TJ48": "TJ48 - 323-TJI-54",
+    "TJ49": "TJ49 - 323-TJI-58",
+    "TJ50": "TJ50 - 323-TJI-60",
+    "TJ51": "TJ51 - 323-TJI-62",
+    "TJ52": "TJ52 - 323-TJI-65",
+    "TJ53": "TJ53 - 323-TJI-75",
+    "TJ54": "TJ54 - 323-TJI-80",
+    "TJ55": "TJ55 - 323-TJI-90",
+    "TJ56": "TJ56 - 323-TJI-100",
+    "TJ57": "TJ57 - 323-TJI-120",
+    "TJ58": "TJ58 - 340-TJ-55",
+    "TJ59": "TJ59 - 340-TJ-58",
+    "TJ60": "TJ60 - 340-TJ-60",
+    "TJ61": "TJ61 - 340-TJ-65",
+    "TJ62": "TJ62 - 340-TJ-70",
+    "WM01": "WM01 - 270",
+    "WM04": "WM04 - 270",
+    "WM06": "WM06 - 229",
+    "WO01": "WO01 - 30.270.200",
+    "WO02": "WO02 - 38.270.200",
+    "WO03": "WO03 - 40.270.200",
+    "WO04": "WO04 - 50.270.200",
+    "WO05": "WO05 - 60.270.200",
+  };
+  </script>
+
+  <!-- Script principal de la app -->
+  <script>
+    const CALCOS_POR_HOJA = 6;
+
+    // Posiciones en cada hoja A4
+    const POSITIONS = [
+      { left: 15,  top: 25 },   // 1 izq fila 1
+      { left: 115, top: 25 },   // 2 der fila 1
+      { left: 15,  top: 120 },  // 3 izq fila 2
+      { left: 115, top: 120 },  // 4 der fila 2
+      { left: 15,  top: 215 },  // 5 izq fila 3
+      { left: 115, top: 215 }   // 6 der fila 3
+    ];
+
+    const formsContainer  = document.getElementById("forms-container");
+    const sheetsContainer = document.getElementById("sheets-container");
+    const splashEl        = document.getElementById("splash");
+
+    let calcoCount = 0;
+
+    function getOrCreateSheet(pageIndex){
+      const selector = '.sheet[data-page="' + pageIndex + '"]';
+      let sheet = sheetsContainer.querySelector(selector);
+      if(!sheet){
+        sheet = document.createElement("div");
+        sheet.className = "sheet";
+        sheet.dataset.page = pageIndex;
+        sheetsContainer.appendChild(sheet);
+      }
+      return sheet;
+    }
+
+    function crearCalco(index){
+      const pageIndex = Math.floor(index / CALCOS_POR_HOJA);
+      const posIndex  = index % CALCOS_POR_HOJA;
+      const pos       = POSITIONS[posIndex];
+
+      const formDiv = document.createElement("div");
+      formDiv.className = "calco-form";
+      formDiv.dataset.index = index;
+
+      formDiv.innerHTML = `
+        <h4>Calco ${index + 1}</h4>
+        <label>Marca
+          <input type="text" data-field="marca">
+        </label>
+        <label>Nº de Serie
+          <input type="text" data-field="serie">
+        </label>
+        <label>Capacidad
+          <input type="text" data-field="cap">
+        </label>
+        <label>Diámetro
+          <input type="text" data-field="diam">
+        </label>
+        <label>Venc. P.H.
+          <input type="text" data-field="venc">
+        </label>
+        <label>Taller
+          <input type="text" data-field="taller">
+        </label>
+      `;
+      formsContainer.appendChild(formDiv);
+
+      const sheet = getOrCreateSheet(pageIndex);
+
+      const labelArea = document.createElement("div");
+      labelArea.className = "label-area";
+      labelArea.style.left = pos.left + "mm";
+      labelArea.style.top  = pos.top  + "mm";
+      labelArea.dataset.index = index;
+      if(pos.left >= 100) labelArea.classList.add("right-col");
+
+      const campos = ["marca","serie","cap","diam","venc","taller"];
+      campos.forEach(campo => {
+        const span = document.createElement("span");
+        span.className = "field-value " + campo;
+        span.id = "out-" + campo + "-" + index;
+        labelArea.appendChild(span);
+      });
+
+      sheet.appendChild(labelArea);
+
+      const inputs = formDiv.querySelectorAll("input[data-field]");
+      inputs.forEach(input => {
+        input.addEventListener("input", () => {
+          const campo = input.getAttribute("data-field");
+          const outSpan = document.getElementById("out-" + campo + "-" + index);
+          outSpan.textContent = input.value || "";
+        });
+      });
+    }
+
+    function addCalco(){
+      crearCalco(calcoCount);
+      calcoCount++;
+    }
+
+    function clearAll(){
+      formsContainer.innerHTML = "";
+      sheetsContainer.innerHTML = "";
+      calcoCount = 0;
+      addCalco();
+    }
+
+    document.getElementById("btn-add").addEventListener("click", addCalco);
+    document.getElementById("btn-print").addEventListener("click", () => window.print());
+    document.getElementById("btn-clear").addEventListener("click", clearAll);
+
+    if(splashEl){
+      splashEl.addEventListener("animationend", () => {
+        splashEl.style.display = "none";
+      });
+    }
+
+    // Buscador de cilindros (código -> detalle ENARGAS / volumen / diámetro)
+    const codeInput = document.getElementById("cyl-code-input");
+    const resultEl  = document.getElementById("cyl-result");
+
+    if (codeInput && resultEl) {
+      codeInput.addEventListener("input", () => {
+        let raw = codeInput.value.trim();
+        if (!raw) {
+          resultEl.textContent = "Ingresá un código.";
+          return;
+        }
+
+        if (typeof CILINDROS === "undefined") {
+          resultEl.textContent = "No se cargó la base de cilindros.";
+          return;
+        }
+
+        // Si viene algo tipo "KH15 - 200/..." me quedo solo con "KH15"
+        const rawUpper = raw.toUpperCase();
+        let key = rawUpper.split(" - ")[0].trim();
+
+        let data = CILINDROS[key] || null;
+
+        // Si no hay exacto y hay espacios, probar con la última palabra (ej: "KIOSHI KH15")
+        if (!data && key.indexOf(" ") !== -1) {
+          const parts = key.split(/\s+/).filter(Boolean);
+          const last = parts[parts.length - 1];
+          if (CILINDROS[last]) {
+            data = CILINDROS[last];
+            key = last;
+          }
+        }
+
+        // Si todavía no hay, probar coincidencias parciales en el código
+        if (!data) {
+          const allCodes = Object.keys(CILINDROS);
+          const matches = allCodes.filter(c => c.indexOf(key) !== -1);
+
+          if (matches.length === 1) {
+            data = CILINDROS[matches[0]];
+            key = matches[0];
+          } else if (matches.length > 1) {
+            const lista = matches.slice(0, 30).map(m => "- " + m).join("<br>");
+            resultEl.innerHTML = "Código no encontrado exacto. Coincidencias:<br>" + lista;
+            return;
+          }
+        }
+
+        if (data) {
+          if (typeof data === "string") {
+            resultEl.innerHTML =
+              "<strong>Código:</strong> " + key + "<br>" +
+              "<strong>Detalle ENARGAS:</strong> " + data;
+          } else {
+            const vol  = (data.volumen  !== undefined) ? data.volumen  : "";
+            const diam = (data.diametro !== undefined) ? data.diametro : "";
+            resultEl.innerHTML =
+              "<strong>Código:</strong> " + key + "<br>" +
+              "<strong>Volumen:</strong> " + vol + " litros<br>" +
+              "<strong>Diámetro:</strong> " + diam + " mm";
+          }
+        } else {
+          resultEl.textContent = "Código no encontrado.";
+        }
+      });
+    }
+
+// Primer calco por defecto
+    addCalco();
+  </script>
+</body>
+</html>
