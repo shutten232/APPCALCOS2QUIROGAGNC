@@ -330,7 +330,7 @@
     .marca{ top:38.9%; }
 
     .serie{
-      top:48.8%;
+      top:49.5%;
       font-size:23pt;
       font-weight:700;
       letter-spacing:0.4px;
@@ -341,8 +341,8 @@
     .venc{ top:78.6%; }
 
     .taller{
-      top:88.5%;
-      font-size:20pt;
+      top:89.2%;
+      font-size:23pt;
       font-weight:700;
       letter-spacing:0.5px;
     }
@@ -362,6 +362,13 @@
       .cyl-float{
         display:none !important;
       }
+
+      /* En impresión, saco el flex para que cada hoja empiece igual */
+      #sheets-container{
+        display:block;
+        gap:0;
+      }
+
       .sheet{
         box-shadow:none;
         page-break-after:always;
