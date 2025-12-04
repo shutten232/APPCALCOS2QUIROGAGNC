@@ -330,7 +330,7 @@
     .marca{ top:38.9%; }
 
     .serie{
-      top:49.5%;
+      top:48.8%;
       font-size:23pt;
       font-weight:700;
       letter-spacing:0.4px;
@@ -341,7 +341,7 @@
     .venc{ top:78.6%; }
 
     .taller{
-      top:89.2%;
+      top:88.5%;
       font-size:23pt;
       font-weight:700;
       letter-spacing:0.5px;
@@ -362,13 +362,6 @@
       .cyl-float{
         display:none !important;
       }
-
-      /* En impresión, saco el flex para que cada hoja empiece igual */
-      #sheets-container{
-        display:block;
-        gap:0;
-      }
-
       .sheet{
         box-shadow:none;
         page-break-after:always;
@@ -2373,7 +2366,11 @@
       const labelArea = document.createElement("div");
       labelArea.className = "label-area";
       labelArea.style.left = pos.left + "mm";
-      labelArea.style.top  = pos.top  + "mm";
+
+      // Compensación fina para que la 2ª hoja no quede un renglón más arriba
+      const PAGE_OFFSET_MM = pageIndex === 0 ? 0 : 2; // ajustar si hace falta
+      labelArea.style.top  = (pos.top + PAGE_OFFSET_MM) + "mm";
+
       labelArea.dataset.index = index;
       if(pos.left >= 100) labelArea.classList.add("right-col");
 
